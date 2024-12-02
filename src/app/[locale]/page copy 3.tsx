@@ -21,22 +21,20 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePathname, useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations();
 
   const locale = pathname.includes("/zh") ? "zh" : "en";
 
   const navItems = [
-    { href: "#what", label: t("nav.whatsMBN") },
-    { href: "#comparing", label: t("nav.comparing") },
-    { href: "#why", label: t("nav.whyImportant") },
-    { href: "#how", label: t("nav.howItWorks") },
-    { href: "#faq", label: t("nav.faq") },
+    { href: "#what", label: "What's MBN" },
+    { href: "#comparing", label: "Comparing" },
+    { href: "#why", label: "Why Important" },
+    { href: "#how", label: "How It Works" },
+    { href: "#faq", label: "FAQ" },
   ];
 
   const languageLabel = locale === "zh" ? "中文" : "EN";
@@ -131,13 +129,11 @@ const Header = () => {
 };
 
 const LandingPage = () => {
-  const t = useTranslations();
-
   const features = [
-    t("hero.features.0"),
-    t("hero.features.1"),
-    t("hero.features.2"),
-    t("hero.features.3"),
+    "Entirely built on Bitcoin's tech and consensus, skipping the need for new inventions.",
+    "Able to hook up with mainstream UTXO chains, skipping hefty dev or new public chain launches.",
+    "It drives dynamic, limitless expansion, bearing the world's daily Web3 needs.",
+    "It can fully utilize the infrastructures of other side chains, such as layer-one smart contracts or layer-two EVMs.",
   ];
 
   const renderFeatures = () => {
@@ -154,20 +150,27 @@ const LandingPage = () => {
   const renderFAQs = () => {
     const faqs = [
       {
-        title: t("faq.questions.0.title"),
-        content: t("faq.questions.0.content"),
+        title:
+          "Is MetaBitcoin Network a specific blockchain? Does it have project tokens?",
+        content:
+          "MBN isn't a specific blockchain or project. It's a simple and feasible plan to expand the Bitcoin network. It forms a Bitcoin-based Web3 solution by leveraging the already launched UTXO public chains and technologies, along with appropriate asset bridges and data Rollup schemes...",
       },
       {
-        title: t("faq.questions.1.title"),
-        content: t("faq.questions.1.content"),
+        title:
+          "What's the relationship between MetaBitcoin Network and MetaID?",
+        content:
+          "MetaBitcoin is a Bitcoin expansion plan proposed by the MetaID protocol team. The MetaID protocol is a Web3 construction plan designed for Bitcoin. Based on the MetaID protocol, various Web3 applications can be developed in the Bitcoin ecosystem, such as...",
       },
       {
-        title: t("faq.questions.2.title"),
-        content: t("faq.questions.2.content"),
+        title:
+          "Why does MetaBitcoin Network connect UTXO public chains like MVC and BCH?",
+        content:
+          "MBN can be compatible with most of the mainstream UTXO public chains nowadays, including BCH, BSV, FB and MVC, etc. MBN has no preference for any UTXO public chains that meet the standards. MBN will link the mainstream UTXO public chains and their replica chains. Ultimately, ...",
       },
       {
-        title: t("faq.questions.3.title"),
-        content: t("faq.questions.3.content"),
+        title: "What's the relationship between MetaBitcoin Network and FB?",
+        content:
+          "Some of the goals and visions of MBN and FB are the same. They both aim to expand Bitcoin and do so by connecting other chains with BTC as the core. However, there are three main differences:...",
       },
     ];
 
@@ -187,7 +190,7 @@ const LandingPage = () => {
             variant="link"
             className="text-orange-500 p-0 flex items-center hover:text-orange-400 transition-colors absolute right-4 md:right-6 bottom-2 gap-0 hover:no-underline text-sm md:text-base"
           >
-            {t("faq.learnMore")}
+            Learn More
             <ChevronRight className="h-4 w-4" />
           </Button>
         </CardContent>
@@ -198,42 +201,33 @@ const LandingPage = () => {
   const howItWorksCards = [
     {
       icon: <Share2 className="h-5 w-5 md:h-6 md:w-6" />,
-      title: t("how.point1.title"),
-      description: t("how.point1.description"),
+      title: "Utilize existing compliant UTXO public chains",
+      description:
+        "Existing compliant UTXO public chains are the bedrock. Mature, stable, they slash costs & time. Nodes & power, ready-made. Their models, a springboard for complex apps.",
     },
     {
       icon: <Film className="h-5 w-5 md:h-6 md:w-6" />,
-      title: t("how.point2.title"),
-      description: t("how.point2.description"),
+      title: "UTXO multi-chain bridge: Wrapping & Mapping",
+      description:
+        "The UTXO multi-chain asset bridge, with its Wrapping function, breaks the barriers between chains to package assets. The Mapping function establishes mappings to ensure the integrity of information and promote the smooth flow of assets.",
     },
     {
       icon: <Maximize className="h-5 w-5 md:h-6 md:w-6" />,
-      title: t("how.point3.title"),
-      description: t("how.point3.description"),
+      title: "Rollup UTXO chain asset Mapping to BTC main chain",
+      description:
+        "Rollup operation pools UTXO chains' asset mappings to BTC main chain, boosting efficiency, easing load, ensuring info reliability via BTC's authority, and augmenting network scalability and user trust.",
     },
     {
       icon: <Network className="h-5 w-5 md:h-6 md:w-6" />,
-      title: t("how.point4.title"),
-      description: (
-        <ul className="list-disc list-inside text-white/70 text-xs md:text-sm leading-relaxed">
-          <li>{t("how.point4.list.0")}</li>
-          <li>{t("how.point4.list.1")}</li>
-          <li>{t("how.point4.list.2")}</li>
-          <li>{t("how.point4.list.3")}</li>
-          <li>{t("how.point4.list.4")}</li>
-        </ul>
-      ),
+      title: "Compliant MBN side chains",
+      description:
+        "MVC (MicroVisionChain) and its replica chains, FB (Fractal BTC) and its replica chains, BCH (Bitcoin Cash), BSV (Bitcoin SV), XEC (eCash)",
     },
     {
       icon: <Shield className="h-5 w-5 md:h-6 md:w-6" />,
-      title: t("how.point5.title"),
-      description: (
-        <ul className="list-disc list-inside text-white/70 text-xs md:text-sm leading-relaxed">
-          <li>{t("how.point5.list.0")}</li>
-          <li>{t("how.point5.list.1")}</li>
-          <li>{t("how.point5.list.2")}</li>
-        </ul>
-      ),
+      title: "MBN Side Chain Formation Conditions",
+      description:
+        "It is a Permissionless Public Chain, It is homophylic To Bitcoin, Including Adopting The UTXO Architecture And Supporting Legacy Addresses, Etc",
     },
   ];
 
@@ -254,10 +248,14 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90">
-              {t("hero.title")}
+              What Is MetaBitcoin Network
             </h1>
             <p className="text-white/70 text-base md:text-xl lg:text-2xl leading-relaxed mb-8 md:mb-12">
-              {t("hero.description")}
+              The MetaBitcoin Network, centered on the BTC chain, can
+              dynamically link other Bitcoin isomorphic chains, forming a
+              scalable network. It fully solves Bitcoin&apos;s expansion issue
+              and enables building a Bitcoin-based Web3 network for 80 billion
+              people globally to use.
             </p>
             <div className="space-y-4 md:space-y-6 bg-[#9B7C68]/10 p-4 md:p-6 rounded-xl">
               {renderFeatures()}
@@ -289,7 +287,7 @@ const LandingPage = () => {
                       height={43}
                       className="w-32 md:w-auto"
                     />
-                    <span>{t("comparing.title1")}</span>
+                    <span>Boosts</span>
                   </h2>
                   <h2 className="flex items-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
                     <Image
@@ -299,11 +297,17 @@ const LandingPage = () => {
                       height={48}
                       className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12"
                     />
-                    <span className="text-white">{t("comparing.title2")}</span>
+                    <span className="text-white">BTC Scalability</span>
                   </h2>
                 </div>
                 <p className="text-white/70 text-sm md:text-base lg:text-lg leading-relaxed">
-                  {t("comparing.description")}
+                  MetaID supercharges BTC&apos;s trading flow via novel tech and
+                  architecture. It streamlines storage-verification, slashing
+                  redundancies for a speed boost. With smart resource
+                  distribution, it equalizes high-traffic node loads, banishing
+                  jams and lags. Thus, BTC can juggle more trades, handling
+                  small and large sums with ease, broadening its application and
+                  fortifying its stability.
                 </p>
               </div>
               <div className="flex-1">
@@ -323,7 +327,7 @@ const LandingPage = () => {
         <section className="scroll-mt-16 md:scroll-mt-24 py-8 md:py-20">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 md:mb-12 text-center text-white/90">
-              {t("comparison.title")}
+              Bitcoin Scalability Solutions Comparison
             </h2>
             <Image
               src="/table.png"
@@ -347,26 +351,37 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto md:mr-0 md:ml-auto text-center md:text-left">
             <h2 className="text-4xl md:text-6xl font-semibold mb-6 text-white">
-              {t("why.title")}
+              Why is it important
             </h2>
             <p className="text-lg text-white/70 mb-12">
-              {t("why.description")}
+              Briefly speaking, MBN enables Bitcoin to...
             </p>
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16">
               <div className="lg:w-1/2">
                 <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
-                  {t("why.point1.title")}
+                  A Web3 world for 8 billion people can be built on Bitcoin
                 </h3>
                 <p className="text-white/70 text-base md:text-lg leading-relaxed">
-                  {t("why.point1.description")}
+                  Based on the trust of Bitcoin, leveraging its characteristics
+                  and potential to meet the needs of a large number of users and
+                  achieve Web3 functional innovations such as identity
+                  authentication and value exchange.
                 </p>
               </div>
               <div className="lg:w-1/2">
                 <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
-                  {t("why.point2.title")}
+                  Bitcoin and native Bitcoin assets can be atomically
+                  transferred to other side chains.
                 </h3>
                 <p className="text-white/70 text-base md:text-lg leading-relaxed">
-                  {t("why.point2.description")}
+                  Atomic transfer ensures the security and integrity of assets
+                  through cryptographic algorithms and smart contracts. It
+                  increases the flexibility of use, allowing the selection of a
+                  trading environment according to the characteristics of the
+                  side chain, such as a side chain with low fees, a side chain
+                  for industrial applications, etc. This promotes the
+                  development of the side chain ecosystem, brings value and
+                  liquidity, and attracts developers and users.
                 </p>
               </div>
             </div>
@@ -388,7 +403,7 @@ const LandingPage = () => {
         />
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 md:mb-8 text-center text-white/90">
-            {t("how.title")}
+            How It Works
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
             {howItWorksCards.map((card, index) => (
@@ -442,7 +457,7 @@ const LandingPage = () => {
       >
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 md:mb-8 text-center text-white/90">
-            {t("faq.title")}
+            Frequently Asked Questions
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {renderFAQs()}
@@ -455,7 +470,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-white/70 text-xs mb-2 md:mb-0">
-              {t("footer.copyright")}
+              MetaBitcoin Network Copyright @2024
             </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-2 md:gap-4">
               {[

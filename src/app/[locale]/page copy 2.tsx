@@ -71,7 +71,7 @@ const Header = () => {
         </nav>
         {/* FIXME: dropdown menu shake */}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button
               variant="ghost"
               size="sm"
@@ -214,26 +214,12 @@ const LandingPage = () => {
     {
       icon: <Network className="h-5 w-5 md:h-6 md:w-6" />,
       title: t("how.point4.title"),
-      description: (
-        <ul className="list-disc list-inside text-white/70 text-xs md:text-sm leading-relaxed">
-          <li>{t("how.point4.list.0")}</li>
-          <li>{t("how.point4.list.1")}</li>
-          <li>{t("how.point4.list.2")}</li>
-          <li>{t("how.point4.list.3")}</li>
-          <li>{t("how.point4.list.4")}</li>
-        </ul>
-      ),
+      description: t("how.point4.description"),
     },
     {
       icon: <Shield className="h-5 w-5 md:h-6 md:w-6" />,
       title: t("how.point5.title"),
-      description: (
-        <ul className="list-disc list-inside text-white/70 text-xs md:text-sm leading-relaxed">
-          <li>{t("how.point5.list.0")}</li>
-          <li>{t("how.point5.list.1")}</li>
-          <li>{t("how.point5.list.2")}</li>
-        </ul>
-      ),
+      description: t("how.point5.description"),
     },
   ];
 
@@ -388,7 +374,7 @@ const LandingPage = () => {
         />
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 md:mb-8 text-center text-white/90">
-            {t("how.title")}
+            How It Works
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
             {howItWorksCards.map((card, index) => (
@@ -442,7 +428,7 @@ const LandingPage = () => {
       >
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 md:mb-8 text-center text-white/90">
-            {t("faq.title")}
+            Frequently Asked Questions
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {renderFAQs()}
@@ -455,7 +441,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-white/70 text-xs mb-2 md:mb-0">
-              {t("footer.copyright")}
+              MetaBitcoin Network Copyright @2024
             </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-2 md:gap-4">
               {[
