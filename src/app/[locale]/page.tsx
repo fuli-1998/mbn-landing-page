@@ -132,6 +132,8 @@ const Header = () => {
 
 const LandingPage = () => {
   const t = useTranslations();
+  const pathname = usePathname();
+  const locale = pathname.includes("/zh") ? "zh" : "en";
 
   const features = [
     t("hero.features.0"),
@@ -326,7 +328,7 @@ const LandingPage = () => {
               {t("comparison.title")}
             </h2>
             <Image
-              src="/table.png"
+              src={`/table-${locale}.png`}
               alt="Solutions"
               width={500}
               height={500}
