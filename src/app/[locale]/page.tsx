@@ -29,7 +29,7 @@ const Header = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const locale = pathname.includes("/zh") ? "zh" : "en";
+  const locale = pathname && pathname.includes("/zh") ? "zh" : "en";
 
   const navItems = [
     { href: "#what", label: t("nav.whatsMBN") },
@@ -43,7 +43,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-16 md:h-24 fixed top-0 z-[100] bg-opacity-50 backdrop-blur">
-      <div className="container mx-auto px-4 h-full flex items-center justify-between">
+      <div className="container mx-auto px-4 h-full flex items-center justify-between md:max-w-[1200px]">
         <div className="flex items-center">
           <button
             className="md:hidden mr-4 text-white"
@@ -82,8 +82,9 @@ const Header = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            align="end"
-            className="bg-black/90 backdrop-blur-md border-stone-800 z-[500] w-32"
+            align="center" // 修改对齐方式为中间
+            side="top" // 修改弹窗显示在按钮的上方
+            className="bg-black/90 backdrop-blur-md border-stone-800 z-[500] w-32 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-black/30" // 优化滚动条样式
           >
             <DropdownMenuItem
               className="text-white/90 hover:text-orange-500"
@@ -105,11 +106,11 @@ const Header = () => {
       <div
         className={`md:hidden fixed inset-0 z-50 bg-black transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out`}
+        } transition-transform duration-300 ease-in-out px-4`}
       >
         <div className="flex justify-end p-4">
           <button className="text-white" onClick={() => setIsMenuOpen(false)}>
-            <X size={24} />
+            <X size={24} className="mr-2" />
           </button>
         </div>
         <nav className="flex flex-col items-center mt-8">
@@ -133,7 +134,7 @@ const Header = () => {
 const LandingPage = () => {
   const t = useTranslations();
   const pathname = usePathname();
-  const locale = pathname.includes("/zh") ? "zh" : "en";
+  const locale = pathname && pathname.includes("/zh") ? "zh" : "en";
 
   const features = [
     t("hero.features.0"),
@@ -141,6 +142,8 @@ const LandingPage = () => {
     t("hero.features.2"),
     t("hero.features.3"),
   ];
+
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
 
   const renderFeatures = () => {
     return features.map((feature, index) => (
@@ -173,28 +176,57 @@ const LandingPage = () => {
       },
     ];
 
-    return faqs.map((faq, i) => (
-      <Card
-        key={i}
-        className="bg-white/10 border-none transition-colors relative"
-      >
-        <CardContent className="p-4 md:p-6">
-          <h3 className="text-xl md:text-2xl font-semibold mb-4 text-white/90">
-            {faq.title}
-          </h3>
-          <p className="text-white/70 text-xs md:text-sm leading-relaxed mb-4">
-            {faq.content}
-          </p>
-          <Button
-            variant="link"
-            className="text-orange-500 p-0 flex items-center hover:text-orange-400 transition-colors absolute right-4 md:right-6 bottom-2 gap-0 hover:no-underline text-sm md:text-base"
+    return (
+      <>
+        {faqs.map((faq, i) => (
+          <Card
+            key={i}
+            className="bg-white/10 border-none transition-colors relative"
           >
-            {t("faq.learnMore")}
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </CardContent>
-      </Card>
-    ));
+            <CardContent className="p-4 md:p-6">
+              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-white/90">
+                {faq.title}
+              </h3>
+              <p className="text-white/70 text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">
+                {faq.content}
+              </p>
+              <Button
+                variant="link"
+                className="text-orange-500 p-0 flex items-center hover:text-orange-400 transition-colors gap-0 hover:no-underline text-sm md:text-base"
+                onClick={() => setExpandedFAQ(i)}
+              >
+                {t("faq.learnMore")}
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </CardContent>
+            {expandedFAQ === i && (
+              <div
+                className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 animate-in fade-in duration-300"
+                onClick={() => setExpandedFAQ(null)}
+              >
+                <div
+                  className="bg-white/10 backdrop-blur-md p-6 rounded-lg max-w-lg w-[90%] md:w-full relative text-white max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-black/30"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    className="absolute top-2 right-2 text-white"
+                    onClick={() => setExpandedFAQ(null)}
+                  >
+                    <X size={18} />
+                  </button>
+                  <h3 className="text-xl md:text-2xl font-semibold mb-4">
+                    {faq.title}
+                  </h3>
+                  <p className="text-sm md:text-base leading-relaxed mb-4">
+                    {faq.content}
+                  </p>
+                </div>
+              </div>
+            )}
+          </Card>
+        ))}
+      </>
+    );
   };
 
   const howItWorksCards = [
@@ -236,6 +268,17 @@ const LandingPage = () => {
           <li>{t("how.point5.list.2")}</li>
         </ul>
       ),
+    },
+  ];
+
+  const whySection = [
+    {
+      title: t("why.point1.title"),
+      description: t("why.point1.description"),
+    },
+    {
+      title: t("why.point2.title"),
+      description: t("why.point2.description"),
     },
   ];
 
@@ -283,23 +326,23 @@ const LandingPage = () => {
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
               <div className="flex-1 flex flex-col items-start">
                 <div className="flex flex-col items-start gap-2 md:gap-4 mb-4 md:mb-6">
-                  <h2 className="flex items-center gap-x-2 md:gap-x-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
+                  <h2 className="flex items-center gap-x-2 md:gap-x-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold whitespace-nowrap">
                     <Image
                       src="/METAID.svg"
                       alt="MetaID"
-                      width={215}
-                      height={43}
-                      className="w-32 md:w-auto"
+                      width={0}
+                      height={0}
+                      className="w-24 md:w-36"
                     />
                     <span>{t("comparing.title1")}</span>
                   </h2>
-                  <h2 className="flex items-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
+                  <h2 className="flex items-center gap-x-2 md:gap-x-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">
                     <Image
                       src="/Bitcoin.svg"
                       alt="Bitcoin"
                       width={48}
                       height={48}
-                      className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12"
+                      className="size-8 md:size-10 lg:size-12"
                     />
                     <span className="text-white">{t("comparing.title2")}</span>
                   </h2>
@@ -314,7 +357,7 @@ const LandingPage = () => {
                   alt="BTC Scalability"
                   width={500}
                   height={500}
-                  className="w-full h-auto"
+                  className="w-full h-auto md:w-3/4 md:ml-auto"
                 />
               </div>
             </div>
@@ -351,26 +394,17 @@ const LandingPage = () => {
             <h2 className="text-4xl md:text-6xl font-semibold mb-6 text-white">
               {t("why.title")}
             </h2>
-            <p className="text-lg text-white/70 mb-12">
-              {t("why.description")}
-            </p>
             <div className="flex flex-col lg:flex-row gap-8 md:gap-16">
-              <div className="lg:w-1/2">
-                <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
-                  {t("why.point1.title")}
-                </h3>
-                <p className="text-white/70 text-base md:text-lg leading-relaxed">
-                  {t("why.point1.description")}
-                </p>
-              </div>
-              <div className="lg:w-1/2">
-                <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
-                  {t("why.point2.title")}
-                </h3>
-                <p className="text-white/70 text-base md:text-lg leading-relaxed">
-                  {t("why.point2.description")}
-                </p>
-              </div>
+              {whySection.map((point, index) => (
+                <div key={index} className="lg:w-1/2">
+                  <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
+                    {point.title}
+                  </h3>
+                  <p className="text-white/70 text-base md:text-lg leading-relaxed">
+                    {point.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

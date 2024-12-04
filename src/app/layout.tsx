@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Hanken_Grotesk } from "next/font/google";
+import setupLocatorUI from "@locator/runtime";
 
-const hankenGrotesk = Hanken_Grotesk({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-hanken-grotesk",
-});
+if (process.env.NODE_ENV === "development") {
+  setupLocatorUI();
+}
 
 export const metadata: Metadata = {
   title: "MetaBitcoin Network",
@@ -21,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${hankenGrotesk.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={"antialiased"}>{children}</body>
     </html>
   );
 }
