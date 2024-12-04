@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: "Hanken Grotesk";
+  font-family: 'Hanken Grotesk', Arial, Helvetica, sans-serif;
 }
 
 @layer base {
@@ -69,18 +69,4 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.hanken-grotesk-regular {
-  font-family: "Hanken Grotesk", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.hanken-grotesk-bold {
-  font-family: "Hanken Grotesk", serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
 }

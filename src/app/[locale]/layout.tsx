@@ -5,16 +5,13 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
-// const geistSans = localFont({
-//   src: "../fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "../fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
+import { Hanken_Grotesk } from "next/font/google";
+
+const hankenGrotesk = Hanken_Grotesk({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-hanken-grotesk",
+});
 
 export default async function LocaleLayout({
   children,
@@ -34,10 +31,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   return (
     <html lang={locale}>
-      <body
-        className={`antialiased`}
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${hankenGrotesk.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
