@@ -8,7 +8,7 @@
   },
   "hero": {
     "title": "What Is MetaBitcoin Network?",
-    "description": "The MetaBitcoin Network, centered on the BTC chain, can dynamically link other Bitcoin isomorphic chains, forming a dynamic and infinitely scalable Bitcoin isomorphic network. This network fully solves Bitcoin's expansion issue and enables building a Bitcoin-based Web3 network for 8 billion people globally to use.",
+    "description": "MetaBitcoin Network is a BTC chain-centric network that dynamically links other Bitcoin-compatible chains, weaving them into a vast and infinitely scalable Bitcoin network. This network has the potential to fully address Bitcoin's scalability issues and to create a Bitcoin-based Web3 world for 8 billion people globally.",
     "features": {
       "0": "Based on Bitcoin's technical architecture and consensus mechanism, eliminating the need to invent new technologies.",
       "1": "Capable of linking to mainstream UTXO chains without requiring extensive development or the creation of new chains.",
