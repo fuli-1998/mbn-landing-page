@@ -11,14 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import {
-  Share2,
-  Film,
-  Maximize,
-  Network,
-  Shield,
-  ChevronRight,
-} from "lucide-react";
+import { Share2, Film, Maximize, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -42,7 +35,7 @@ const Header = () => {
   const languageLabel = locale === "zh" ? "中文" : "EN";
 
   return (
-    <header className="w-full h-16 md:h-24 fixed top-0 z-[100] bg-opacity-50 backdrop-blur">
+    <header className="w-full h-16 md:h-24 fixed top-0 z-[100] bg-opacity-50 backdrop-blur-lg">
       <div className="container mx-auto px-4 h-full flex items-center justify-between md:max-w-[1200px]">
         <div className="flex items-center">
           <button
@@ -82,9 +75,9 @@ const Header = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            align="center" // 修改对齐方式为中间
-            side="top" // 修改弹窗显示在按钮的上方
-            className="bg-black/90 backdrop-blur-md border-stone-800 z-[500] w-32 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-black/30" // 优化滚动条样式
+            align="center"
+            side="top"
+            className="bg-black/90 backdrop-blur-md border-stone-800 z-[500] w-32 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-black/30"
           >
             <DropdownMenuItem
               className="text-white/90 hover:text-orange-500"
@@ -104,28 +97,30 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-0 z-50 bg-black transform ${
+        className={`md:hidden fixed inset-0 z-50 transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out px-4`}
+        } transition-transform duration-300 ease-in-out`}
       >
-        <div className="flex justify-end p-4">
-          <button className="text-white" onClick={() => setIsMenuOpen(false)}>
-            <X size={24} className="mr-2" />
-          </button>
+        <div className="h-screen flex flex-col bg-black/90 backdrop-blur-lg">
+          <div className="flex justify-end p-4">
+            <button className="text-white" onClick={() => setIsMenuOpen(false)}>
+              <X size={24} />
+            </button>
+          </div>
+          <nav className="flex-1 flex flex-col items-center justify-center">
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.href}
+                className="text-white/90 text-2xl py-4 hover:text-orange-500 transition-colors animate-in fade-in slide-in-from-left duration-300"
+                style={{ animationDelay: `${index * 100}ms` }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
-        <nav className="flex flex-col items-center mt-8">
-          {navItems.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className="text-white/90 text-xl py-4 hover:text-orange-500 transition-colors animate-in fade-in slide-in-from-left duration-300"
-              style={{ animationDelay: `${index * 100}ms` }}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
       </div>
     </header>
   );
@@ -246,23 +241,36 @@ const LandingPage = () => {
       description: t("how.point3.description"),
     },
     {
-      icon: <Network className="h-5 w-5 md:h-6 md:w-6" />,
       title: t("how.point4.title"),
       description: (
-        <ul className="list-disc list-inside text-white/70 text-xs md:text-sm leading-relaxed">
-          <li>{t("how.point4.list.0")}</li>
-          <li>{t("how.point4.list.1")}</li>
-          <li>{t("how.point4.list.2")}</li>
-          <li>{t("how.point4.list.3")}</li>
-          <li>{t("how.point4.list.4")}</li>
+        <ul className="list-inside text-white/70 text-xs md:text-sm leading-relaxed list-none space-y-[18px]">
+          <li className="flex items-center gap-x-2">
+            <Image src="/network/mvc.png" alt="mvc" width={20} height={20} />
+            <span>{t("how.point4.list.0")}</span>
+          </li>
+          <li className="flex items-center gap-x-2">
+            <Image src="/network/fb.png" alt="mvc" width={20} height={20} />
+            <span>{t("how.point4.list.1")}</span>
+          </li>
+          <li className="flex items-center gap-x-2">
+            <Image src="/network/bch.png" alt="mvc" width={20} height={20} />
+            <span>{t("how.point4.list.2")}</span>
+          </li>
+          <li className="flex items-center gap-x-2">
+            <Image src="/network/bsv.png" alt="mvc" width={20} height={20} />
+            <span>{t("how.point4.list.3")}</span>
+          </li>
+          <li className="flex items-center gap-x-2">
+            <Image src="/network/xec.png" alt="mvc" width={20} height={20} />
+            <span>{t("how.point4.list.4")}</span>
+          </li>
         </ul>
       ),
     },
     {
-      icon: <Shield className="h-5 w-5 md:h-6 md:w-6" />,
       title: t("how.point5.title"),
       description: (
-        <ul className="list-disc list-inside text-white/70 text-xs md:text-sm leading-relaxed">
+        <ul className="list-inside text-white/70 text-xs md:text-sm leading-relaxed list-decimal">
           <li>{t("how.point5.list.0")}</li>
           <li>{t("how.point5.list.1")}</li>
           <li>{t("how.point5.list.2")}</li>
@@ -301,7 +309,7 @@ const LandingPage = () => {
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90">
               {t("hero.title")}
             </h1>
-            <p className="text-white/70 text-base md:text-xl lg:text-2xl leading-relaxed mb-8 md:mb-12">
+            <p className="text-white/70 text-base md:text-xl lg:text-2xl leading-loose mb-8 md:mb-12">
               {t("hero.description")}
             </p>
             <div className="space-y-4 md:space-y-6 bg-[#9B7C68]/10 p-4 md:p-6 rounded-xl">
@@ -320,11 +328,11 @@ const LandingPage = () => {
         {/* MetaID Boosts Section */}
         <section
           id="comparing"
-          className="scroll-mt-16 md:scroll-mt-24 py-8 md:py-20 relative overflow-hidden"
+          className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 relative overflow-hidden"
         >
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
-              <div className="flex-1 flex flex-col items-start">
+              <div className="flex-1 flex flex-col items-start hidden">
                 <div className="flex flex-col items-start gap-2 md:gap-4 mb-4 md:mb-6">
                   <h2 className="flex items-center gap-x-2 md:gap-x-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold whitespace-nowrap">
                     <Image
@@ -357,7 +365,7 @@ const LandingPage = () => {
                   alt="BTC Scalability"
                   width={500}
                   height={500}
-                  className="w-full h-auto md:w-3/4 md:ml-auto"
+                  className="max-w-[300px] w-full h-auto md:w-3/4 md:ml-auto"
                 />
               </div>
             </div>
@@ -365,7 +373,7 @@ const LandingPage = () => {
         </section>
 
         {/* Comparison Table */}
-        <section className="scroll-mt-16 md:scroll-mt-24 py-8 md:py-20">
+        <section className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 md:mb-12 text-center text-white/90">
               {t("comparison.title")}
@@ -384,12 +392,12 @@ const LandingPage = () => {
       {/* Why Important Section */}
       <section
         id="why"
-        className="scroll-mt-16 md:scroll-mt-24 py-20 md:py-32 relative overflow-hidden min-h-screen bg-cover bg-center"
+        className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 relative overflow-hidden min-h-screen bg-cover bg-center"
         style={{
           backgroundImage: "url('/galaxy-bg.png')",
         }}
       >
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 sm:mt-60">
           <div className="max-w-4xl mx-auto md:mr-0 md:ml-auto text-center md:text-left">
             <h2 className="text-4xl md:text-6xl font-semibold mb-6 text-white">
               {t("why.title")}
@@ -400,7 +408,7 @@ const LandingPage = () => {
                   <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-white">
                     {point.title}
                   </h3>
-                  <p className="text-white/70 text-base md:text-lg leading-relaxed">
+                  <p className="text-white/70 text-base md:text-lg leading-loose">
                     {point.description}
                   </p>
                 </div>
@@ -413,7 +421,7 @@ const LandingPage = () => {
       {/* How It Works Section */}
       <section
         id="how"
-        className="scroll-mt-16 md:scroll-mt-24 py-8 md:py-20 overflow-hidden"
+        className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 overflow-hidden"
       >
         <Image
           src="/planet-bg.png"
@@ -423,7 +431,7 @@ const LandingPage = () => {
           className="max-w-[960px] mx-auto w-full h-auto"
         />
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 md:mb-8 text-center text-white/90">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90 text-center">
             {t("how.title")}
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
@@ -450,13 +458,15 @@ const LandingPage = () => {
                 }
               >
                 <CardContent className="p-3 md:p-4">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-3 md:mb-4">
-                    <div className="text-orange-500">{card.icon}</div>
-                  </div>
+                  {card.icon && (
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-3 md:mb-4">
+                      <div className="text-orange-500">{card.icon}</div>
+                    </div>
+                  )}
                   <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3 text-white/90">
                     {card.title}
                   </h3>
-                  <p className="text-white/70 text-xs md:text-sm leading-relaxed">
+                  <p className="text-white/70 text-xs md:text-sm leading-loose mt-[18px]">
                     {card.description}
                   </p>
                 </CardContent>
@@ -469,7 +479,7 @@ const LandingPage = () => {
       {/* FAQ Section */}
       <section
         id="faq"
-        className="scroll-mt-16 md:scroll-mt-24 py-8 md:py-20 relative overflow-hidden lg:min-h-[800px]"
+        className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 relative overflow-hidden lg:min-h-[800px]"
         style={{
           backgroundImage: "url('/faq-bg.png')",
           backgroundSize: "cover",
@@ -477,7 +487,7 @@ const LandingPage = () => {
         }}
       >
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-6 md:mb-8 text-center text-white/90">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90 text-center">
             {t("faq.title")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
