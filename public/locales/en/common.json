@@ -22,7 +22,7 @@
     "description": "MetaID supercharges BTC's trading flow via novel tech and architecture. It streamlines storage-verification, slashing redundancies for a speed boost. With smart resource distribution, it equalizes high-traffic node loads, banishing jams and lags. Thus, BTC can juggle more trades, handling small and large sums with ease, broadening its application and fortifying its stability."
   },
   "comparison": {
-    "title": "Bitcoin Scalability Solutions Comparison",
+    "title": "Comparison with Other Bitcoin Scalability Solutions",
     "table": {
       "represent": "Represent",
       "onChain": "On-chain Expansion Plan",
