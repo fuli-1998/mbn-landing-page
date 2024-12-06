@@ -128,8 +128,6 @@ const Header = () => {
 
 const LandingPage = () => {
   const t = useTranslations();
-  const pathname = usePathname();
-  const locale = pathname && pathname.includes("/zh") ? "zh" : "en";
 
   const features = [
     t("hero.features.0"),
@@ -365,7 +363,7 @@ const LandingPage = () => {
                   alt="BTC Scalability"
                   width={500}
                   height={500}
-                  className="max-w-[300px] w-full h-auto md:w-3/4 md:ml-auto"
+                  className="lg:max-w-[800px] w-full h-auto mx-auto"
                 />
               </div>
             </div>
@@ -375,11 +373,11 @@ const LandingPage = () => {
         {/* Comparison Table */}
         <section className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 md:mb-12 text-center text-white/90">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 md:mb-12 text-center text-white/90 max-w-[600px] text-balance mx-auto">
               {t("comparison.title")}
             </h2>
             <Image
-              src={`/table-${locale}.png`}
+              src={`/table.png`}
               alt="Solutions"
               width={500}
               height={500}
