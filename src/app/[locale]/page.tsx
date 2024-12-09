@@ -44,9 +44,10 @@ const Header = () => {
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-          <div className="text-2xl font-bold cursor-pointer text-white">
+          <Image src="/mbn-logo.svg" width={40} height={40} alt="MBN" />
+          {/* <div className="text-2xl font-bold cursor-pointer text-white">
             MBN
-          </div>
+          </div> */}
         </div>
 
         <nav className="hidden md:flex items-center flex-1 justify-center">
@@ -295,7 +296,7 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section
         id="what"
-        className="scroll-mt-16 md:scroll-mt-24 min-h-screen flex items-center relative overflow-hidden pt-16 md:pt-0"
+        className="scroll-mt-16 md:scroll-mt-24 min-h-screen flex items-center relative overflow-hidden pt-16 md:pt-24"
         style={{
           backgroundImage: "url('/space-bg.png')",
           backgroundSize: "cover",
@@ -324,10 +325,7 @@ const LandingPage = () => {
         }}
       >
         {/* MetaID Boosts Section */}
-        <section
-          id="comparing"
-          className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 relative overflow-hidden"
-        >
+        <section className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
               <div className="flex-1 flex flex-col items-start hidden">
@@ -371,14 +369,14 @@ const LandingPage = () => {
         </section>
 
         {/* Comparison Table */}
-        <section className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24">
+        <section id="comparing" className="scroll-mt-16 md:scroll-mt-24">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 md:mb-12 text-center text-white/90 max-w-[600px] text-balance mx-auto">
               {t("comparison.title")}
             </h2>
             <Image
               src={`/table.png`}
-              alt="Solutions"
+              alt="comparing"
               width={500}
               height={500}
               className="max-w-[960px] mx-auto w-full h-auto"
@@ -390,7 +388,7 @@ const LandingPage = () => {
       {/* Why Important Section */}
       <section
         id="why"
-        className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 relative overflow-hidden min-h-screen bg-cover bg-center"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden min-h-screen bg-cover bg-center"
         style={{
           backgroundImage: "url('/galaxy-bg.png')",
         }}
@@ -416,18 +414,18 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <Image
+        src="/planet-bg.png"
+        alt="Solutions"
+        width={500}
+        height={500}
+        className="max-w-[960px] mx-auto w-full h-auto"
+      />
       {/* How It Works Section */}
       <section
         id="how"
-        className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 overflow-hidden"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden"
       >
-        <Image
-          src="/planet-bg.png"
-          alt="Solutions"
-          width={500}
-          height={500}
-          className="max-w-[960px] mx-auto w-full h-auto"
-        />
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90 text-center">
             {t("how.title")}
@@ -477,7 +475,7 @@ const LandingPage = () => {
       {/* FAQ Section */}
       <section
         id="faq"
-        className="scroll-mt-16 md:scroll-mt-24 py-16 md:py-24 relative overflow-hidden lg:min-h-[800px]"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden lg:min-h-[800px]"
         style={{
           backgroundImage: "url('/faq-bg.png')",
           backgroundSize: "cover",
