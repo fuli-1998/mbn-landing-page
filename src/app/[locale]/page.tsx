@@ -426,7 +426,7 @@ const LandingPage = () => {
       {/* How It Works Section */}
       <section
         id="how"
-        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden pb-12"
       >
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90 text-center">
