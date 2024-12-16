@@ -129,6 +129,8 @@ const Header = () => {
 
 const LandingPage = () => {
   const t = useTranslations();
+  const pathname = usePathname();
+  const locale = pathname && pathname.includes("/zh") ? "zh" : "en";
 
   const features = [
     t("hero.features.0"),
@@ -369,13 +371,13 @@ const LandingPage = () => {
         </section>
 
         {/* Comparison Table */}
-        <section id="comparing" className="scroll-mt-16 md:scroll-mt-24">
+        <section id="comparing" className="scroll-mt-16 md:scroll-mt-24 pb-12">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 md:mb-12 text-center text-white/90 max-w-[600px] text-balance mx-auto">
               {t("comparison.title")}
             </h2>
             <Image
-              src={`/table.png`}
+              src={`/table_${locale}.png`}
               alt="comparing"
               width={500}
               height={500}
