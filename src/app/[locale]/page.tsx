@@ -585,9 +585,9 @@ const LandingPage = () => {
                 </div>
 
                 {/* Visualization Area */}
-                <div className="grid grid-cols-[repeat(20,1fr)] grid-rows-[repeat(20,1fr)] w-full aspect-square">
+                <div className="grid grid-cols-[repeat(80,1fr)] grid-rows-[repeat(80,1fr)] w-full aspect-square">
                   {(() => {
-                    const gridSize = 20;
+                    const gridSize = 80;
                     const cells: {
                       row: number;
                       col: number;
@@ -601,13 +601,8 @@ const LandingPage = () => {
                       .map(() => Array(gridSize).fill(false));
 
                     // Check if an area is available
-                    const isAreaAvailable = (
-                      row: number,
-                      col: number,
-                      size: number
-                    ) => {
-                      if (row + size > gridSize || col + size > gridSize)
-                        return false;
+                    const isAreaAvailable = (row: number, col: number, size: number) => {
+                      if (row + size > gridSize || col + size > gridSize) return false;
                       for (let i = 0; i < size; i++) {
                         for (let j = 0; j < size; j++) {
                           if (grid[row + i][col + j]) return false;
@@ -617,11 +612,7 @@ const LandingPage = () => {
                     };
 
                     // Mark an area as used
-                    const markArea = (
-                      row: number,
-                      col: number,
-                      size: number
-                    ) => {
+                    const markArea = (row: number, col: number, size: number) => {
                       for (let i = 0; i < size; i++) {
                         for (let j = 0; j < size; j++) {
                           grid[row + i][col + j] = true;
@@ -629,39 +620,105 @@ const LandingPage = () => {
                       }
                     };
 
-                    // Try to place a block
+                    // Try to place a block with improved placement strategy
                     const tryPlaceBlock = (size: number) => {
-                      const attempts = size === 4 ? 10 : size === 2 ? 30 : 100;
+                      const attempts = {
+                        16: 800,  // Largest blocks
+                        12: 1000, // Extra large blocks
+                        8: 1500,  // Large blocks
+                        4: 2000,  // Medium blocks
+                        2: 2500,  // Small blocks
+                        1: 3000   // Tiny blocks
+                      }[size] || 1000;
+                      
                       for (let attempt = 0; attempt < attempts; attempt++) {
-                        const row = Math.floor(
-                          Math.random() * (gridSize - size + 1)
-                        );
-                        const col = Math.floor(
-                          Math.random() * (gridSize - size + 1)
-                        );
+                        const row = Math.floor(Math.random() * (gridSize - size + 1));
+                        const col = Math.floor(Math.random() * (gridSize - size + 1));
 
                         if (isAreaAvailable(row, col, size)) {
                           markArea(row, col, size);
+                          
+                          // Track orange count during placement
+                          const currentOrangeCount = cells.filter(cell => cell.color === "bg-[#FA9600]").length;
+                          
+                          // Adjust color probability based on block size and current orange count
+                          let orangeProbability;
+                          if (currentOrangeCount >= 500) {
+                            orangeProbability = 0; // No more orange if we hit the limit
+                          } else {
+                            // Larger blocks have higher chance of being orange
+                            orangeProbability = {
+                              16: 0.8,  // 80% chance for largest blocks
+                              12: 0.7,  // 70% chance for extra large blocks
+                              8: 0.6,   // 60% chance for large blocks
+                              4: 0.3,   // 30% chance for medium blocks
+                              2: 0.1,   // 10% chance for small blocks
+                              1: 0.05   // 5% chance for tiny blocks
+                            }[size] || 0.15;
+                          }
+                          
+                          const color = Math.random() < orangeProbability 
+                            ? "bg-[#FA9600]" // Orange
+                            : "bg-[#8385F7]"; // Purple
+                          
                           cells.push({
                             row,
                             col,
                             size,
-                            color:
-                              Math.random() > 0.5
-                                ? "bg-[#FA9600]"
-                                : "bg-[#8385F7]",
+                            color,
                           });
                           return true;
+                        }
+                      }
+
+                      // Try systematic placement with same color logic
+                      for (let row = 0; row <= gridSize - size; row++) {
+                        for (let col = 0; col <= gridSize - size; col++) {
+                          if (isAreaAvailable(row, col, size)) {
+                            markArea(row, col, size);
+                            const currentOrangeCount = cells.filter(cell => cell.color === "bg-[#FA9600]").length;
+                            
+                            let orangeProbability = currentOrangeCount >= 500 ? 0 : {
+                              16: 0.8,
+                              12: 0.7,
+                              8: 0.6,
+                              4: 0.3,
+                              2: 0.1,
+                              1: 0.05
+                            }[size] || 0.15;
+
+                            cells.push({
+                              row,
+                              col,
+                              size,
+                              color: Math.random() < orangeProbability 
+                                ? "bg-[#FA9600]" 
+                                : "bg-[#8385F7]",
+                            });
+                            return true;
+                          }
                         }
                       }
                       return false;
                     };
 
-                    // Place large blocks first
-                    for (let i = 0; i < 5; i++) tryPlaceBlock(4);
-                    // Then medium blocks
-                    for (let i = 0; i < 15; i++) tryPlaceBlock(2);
-                    // Finally fill with small blocks
+                    // Place blocks of different sizes
+                    // Largest blocks (16x16)
+                    for (let i = 0; i < 10; i++) tryPlaceBlock(16);
+
+                    // Extra large blocks (12x12)
+                    for (let i = 0; i < 15; i++) tryPlaceBlock(12);
+
+                    // Large blocks (8x8)
+                    for (let i = 0; i < 30; i++) tryPlaceBlock(8);
+
+                    // Medium blocks (4x4)
+                    for (let i = 0; i < 400; i++) tryPlaceBlock(4);
+
+                    // Initial small blocks (2x2) placement
+                    for (let i = 0; i < 800; i++) tryPlaceBlock(2);
+
+                    // First pass of tiny blocks (1x1)
                     for (let row = 0; row < gridSize; row++) {
                       for (let col = 0; col < gridSize; col++) {
                         if (!grid[row][col]) {
@@ -670,14 +727,72 @@ const LandingPage = () => {
                             row,
                             col,
                             size: 1,
-                            color:
-                              Math.random() > 0.5
-                                ? "bg-[#FA9600]"
-                                : "bg-[#8385F7]",
+                            color: Math.random() > 0.55 ? "bg-[#FA9600]" : "bg-[#8385F7]",
                           });
                         }
                       }
                     }
+
+                    // Additional dense filling passes
+                    for (let pass = 0; pass < 3; pass++) {
+                      // Try each block size in each pass
+                      for (let i = 0; i < 50; i++) tryPlaceBlock(8);
+                      for (let i = 0; i < 200; i++) tryPlaceBlock(4);
+                      for (let i = 0; i < 400; i++) tryPlaceBlock(2);
+                      
+                      // Fill gaps with 1x1 blocks
+                      for (let row = 0; row < gridSize; row++) {
+                        for (let col = 0; col < gridSize; col++) {
+                          if (!grid[row][col]) {
+                            markArea(row, col, 1);
+                            cells.push({
+                              row,
+                              col,
+                              size: 1,
+                              color: Math.random() > 0.55 ? "bg-[#FA9600]" : "bg-[#8385F7]",
+                            });
+                          }
+                        }
+                      }
+                    }
+
+                    // Final random filling with various sizes
+                    const finalPassSizes = [4, 2, 1, 1, 1]; // Weight towards smaller blocks
+                    for (let i = 0; i < 5000; i++) {
+                      const size = finalPassSizes[Math.floor(Math.random() * finalPassSizes.length)];
+                      const row = Math.floor(Math.random() * (gridSize - size + 1));
+                      const col = Math.floor(Math.random() * (gridSize - size + 1));
+                      
+                      if (isAreaAvailable(row, col, size)) {
+                        markArea(row, col, size);
+                        cells.push({
+                          row,
+                          col,
+                          size,
+                          color: Math.random() > 0.55 ? "bg-[#FA9600]" : "bg-[#8385F7]",
+                        });
+                      }
+                    }
+
+                    // Color balance check and adjustment
+                    const balanceColors = () => {
+                      const orangeCount = cells.filter(cell => cell.color === "bg-[#FA9600]").length;
+                      
+                      if (orangeCount > 500) {
+                        // Convert excess orange blocks to purple, prioritizing smaller blocks
+                        const orangeBlocks = cells
+                          .filter(cell => cell.color === "bg-[#FA9600]")
+                          .sort((a, b) => a.size - b.size); // Sort by size ascending (convert small blocks first)
+                        
+                        const excessCount = orangeCount - 500;
+                        orangeBlocks.slice(0, excessCount).forEach(cell => {
+                          cell.color = "bg-[#8385F7]";
+                        });
+                      }
+                    };
+
+                    // Apply color balance before returning cells
+                    balanceColors();
 
                     return cells.map((cell, i) => (
                       <div
@@ -685,7 +800,7 @@ const LandingPage = () => {
                         style={{
                           gridColumn: `${cell.col + 1} / span ${cell.size}`,
                           gridRow: `${cell.row + 1} / span ${cell.size}`,
-                          animationDelay: `${i * 10}ms`,
+                          animationDelay: `${i * 2}ms`,
                         }}
                         className={`${cell.color} border border-black animate-in fade-in duration-300 fill-mode-both`}
                       />
