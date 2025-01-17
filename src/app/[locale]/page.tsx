@@ -724,7 +724,7 @@ const LandingPage = () => {
       </section>
 
       <div
-        className="bg-cover bg-center"
+        className="bg-cover bg-center min-h-screen"
         style={{
           backgroundImage: "url('/bg2.png')",
         }}
@@ -829,7 +829,7 @@ const LandingPage = () => {
       {/* How It Works Section */}
       <section
         id="how"
-        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden pb-12"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden pb-12 min-h-screen"
       >
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90 text-center">
@@ -880,7 +880,7 @@ const LandingPage = () => {
       {/* FAQ Section */}
       <section
         id="faq"
-        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden lg:min-h-[800px]"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden min-h-screen"
         style={{
           backgroundImage: "url('/faq-bg.png')",
           backgroundSize: "cover",
