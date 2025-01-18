@@ -61,7 +61,7 @@ export interface TxStatistics {
 
 // 获取API基础URL的函数
 const getApiBaseUrl = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   return baseUrl;
 };
 
@@ -103,17 +103,25 @@ export const fetchBlockList = async (
 };
 
 // 获取最新区块的函数
-export const fetchLatestBlock = async (): Promise<ApiResponse<LatestBlockResponse>> => {
-  return fetchApi<LatestBlockResponse>('/api/block/latest');
+export const fetchLatestBlock = async (): Promise<
+  ApiResponse<LatestBlockResponse>
+> => {
+  return fetchApi<LatestBlockResponse>("/api/block/latest");
 };
 
 // 获取区块统计数据的函数
-export const fetchBlockStatistics = async (height: number): Promise<ApiResponse<BlockStatistics[]>> => {
-  return fetchApi<BlockStatistics[]>(`/api/statistics/metablock?height=${height}`);
+export const fetchBlockStatistics = async (
+  height: number
+): Promise<ApiResponse<BlockStatistics[]>> => {
+  return fetchApi<BlockStatistics[]>(
+    `/api/statistics/metablock?height=${height}`
+  );
 };
 
 // 获取交易统计数据的函数
-export const fetchTxStatistics = async (height: number): Promise<ApiResponse<TxStatistics[]>> => {
+export const fetchTxStatistics = async (
+  height: number
+): Promise<ApiResponse<TxStatistics[]>> => {
   return fetchApi<TxStatistics[]>(`/api/statistics/tx?height=${height}`);
 };
 
