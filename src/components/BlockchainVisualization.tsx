@@ -137,14 +137,24 @@ export const BlockchainVisualization = () => {
             >
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#090909] mb-4">
-                  {t("tx")}: {mempoolStats.reduce((sum, stat) => sum + (stat.txList?.length || 0), 0)}
+                  {t("tx")}:{" "}
+                  {mempoolStats.reduce(
+                    (sum, stat) => sum + (stat.txList?.length || 0),
+                    0
+                  )}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
                   <div>
-                    BTC: {mempoolStats.find(stat => stat.chainName === "Bitcoin")?.txList?.length || 0} TX
+                    BTC:{" "}
+                    {mempoolStats.find((stat) => stat.chainName === "Bitcoin")
+                      ?.txList?.length || 0}{" "}
+                    TX
                   </div>
                   <div>
-                    MVC: {mempoolStats.find(stat => stat.chainName === "MVC")?.txList?.length || 0} TX
+                    MVC:{" "}
+                    {mempoolStats.find((stat) => stat.chainName === "MVC")
+                      ?.txList?.length || 0}{" "}
+                    TX
                   </div>
                 </div>
               </div>
@@ -204,21 +214,23 @@ export const BlockchainVisualization = () => {
         <div
           className={`mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50 relative
             before:content-[''] before:absolute before:border-[16px] before:border-transparent before:border-b-[#F39800]/50 before:-mt-[1px]
-            before:transition-all before:duration-300
+            before:transition-all before:duration-300 before:bottom-full before:-translate-x-1/2
             after:content-[''] after:absolute after:border-[14px] after:border-transparent after:border-b-[#28211b]
-            after:transition-all after:duration-300
+            after:transition-all after:duration-300 after:bottom-full after:-translate-x-1/2
             animate-in fade-in duration-300
-            ${(() => {
-              const blockIndex = blocks.findIndex(block => block.header === selectedBlock);
-              if (selectedBlock === "mempool") {
-                return "before:left-[10%] before:bottom-full before:-translate-x-1/2 before:opacity-100 after:left-[10%] after:bottom-full after:-translate-x-1/2 after:opacity-100";
-              } else if (blockIndex !== -1) {
-                const leftPosition = 30 + (blockIndex * 20);
-                return `before:left-[${leftPosition}%] before:bottom-full before:-translate-x-1/2 before:opacity-100 after:left-[${leftPosition}%] after:bottom-full after:-translate-x-1/2 after:opacity-100`;
-              }
-              return "before:opacity-0 after:opacity-0";
-            })()}
-          `}
+            ${
+              selectedBlock === "mempool"
+                ? "before:left-[10%] after:left-[10%]"
+                : selectedBlock === blocks[3]?.header
+                ? "before:left-[91%] after:left-[91%]"
+                : selectedBlock === blocks[2]?.header
+                ? "before:left-[70%] after:left-[70%]"
+                : selectedBlock === blocks[1]?.header
+                ? "before:left-[50%] after:left-[50%]"
+                : selectedBlock === blocks[0]?.header
+                ? "before:left-[30%] after:left-[30%]"
+                : "before:opacity-0 after:opacity-0"
+            }`}
         >
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
             {/* Left Column */}
@@ -314,7 +326,7 @@ export const BlockchainVisualization = () => {
                         return (
                           <div
                             key={block.blockHash}
-                            className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square"
+                            className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
                           >
                             <div className="text-[#6C655E] text-xs">
                               # {block.blockHeight}
@@ -387,7 +399,7 @@ export const BlockchainVisualization = () => {
                         return (
                           <div
                             key={block.blockHash}
-                            className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2"
+                            className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
                           >
                             <div className="text-[#6C655E] text-xs">
                               # {block.blockHeight}
@@ -463,14 +475,25 @@ export const BlockchainVisualization = () => {
                   if (!statistics.length) return [];
 
                   // 计算总区块大小
-                  const totalSize = statistics.reduce((sum, stat) => sum + stat.blockSize, 0);
-                  
+                  const totalSize = statistics.reduce(
+                    (sum, stat) => sum + stat.blockSize,
+                    0
+                  );
+
                   // 根据区块大小分配格子数量
                   const getBlockCells = (blockSize: number) => {
                     // 计算这个区块应该占据的格子数量
-                    const cellCount = Math.max(1, Math.floor((blockSize / totalSize) * (gridSize * gridSize)));
+                    const cellCount = Math.max(
+                      1,
+                      Math.floor(
+                        (blockSize / totalSize) * (gridSize * gridSize)
+                      )
+                    );
                     // 将格子数量转换为合适的方块大小
-                    const size = Math.min(16, Math.max(1, Math.floor(Math.sqrt(cellCount))));
+                    const size = Math.min(
+                      16,
+                      Math.max(1, Math.floor(Math.sqrt(cellCount)))
+                    );
                     return { cellCount, size };
                   };
 
@@ -480,8 +503,13 @@ export const BlockchainVisualization = () => {
                     .map(() => Array(gridSize).fill(false));
 
                   // 检查区域是否可用
-                  const isAreaAvailable = (row: number, col: number, size: number) => {
-                    if (row + size > gridSize || col + size > gridSize) return false;
+                  const isAreaAvailable = (
+                    row: number,
+                    col: number,
+                    size: number
+                  ) => {
+                    if (row + size > gridSize || col + size > gridSize)
+                      return false;
                     for (let i = 0; i < size; i++) {
                       for (let j = 0; j < size; j++) {
                         if (grid[row + i][col + j]) return false;
@@ -500,11 +528,18 @@ export const BlockchainVisualization = () => {
                   };
 
                   // 尝试放置区块
-                  const tryPlaceBlock = (size: number, chainName: string): boolean => {
+                  const tryPlaceBlock = (
+                    size: number,
+                    chainName: string
+                  ): boolean => {
                     const attempts = 1000;
                     for (let attempt = 0; attempt < attempts; attempt++) {
-                      const row = Math.floor(Math.random() * (gridSize - size + 1));
-                      const col = Math.floor(Math.random() * (gridSize - size + 1));
+                      const row = Math.floor(
+                        Math.random() * (gridSize - size + 1)
+                      );
+                      const col = Math.floor(
+                        Math.random() * (gridSize - size + 1)
+                      );
 
                       if (isAreaAvailable(row, col, size)) {
                         markArea(row, col, size);
@@ -512,7 +547,10 @@ export const BlockchainVisualization = () => {
                           row,
                           col,
                           size,
-                          color: chainName === "Bitcoin" ? "bg-[#FA9600]" : "bg-[#8385F7]",
+                          color:
+                            chainName === "Bitcoin"
+                              ? "bg-[#FA9600]"
+                              : "bg-[#8385F7]",
                         });
                         return true;
                       }
@@ -525,7 +563,10 @@ export const BlockchainVisualization = () => {
                     const { size } = getBlockCells(stat.blockSize);
                     // 尝试放置区块，如果失败则尝试更小的尺寸
                     let currentSize = size;
-                    while (currentSize > 0 && !tryPlaceBlock(currentSize, stat.chainName)) {
+                    while (
+                      currentSize > 0 &&
+                      !tryPlaceBlock(currentSize, stat.chainName)
+                    ) {
                       currentSize--;
                     }
                   });
@@ -549,4 +590,4 @@ export const BlockchainVisualization = () => {
       </div>
     </section>
   );
-}; 
+};
