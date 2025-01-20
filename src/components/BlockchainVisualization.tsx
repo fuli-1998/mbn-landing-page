@@ -430,9 +430,9 @@ export const BlockchainVisualization = () => {
                 <div className="flex space-x-4 bg-[#28211b] backdrop-blur-lg rounded-[40px] border border-[#47413D] px-4 py-2 overflow-x-auto scrollbar-none">
                   {[
                     { key: "all" },
-                    { key: "consolidation" },
-                    { key: "coinjoin" },
-                    { key: "data" },
+                    // { key: "consolidation" },
+                    // { key: "coinjoin" },
+                    // { key: "data" },
                   ].map((tab, index) => (
                     <button
                       key={tab.key}
