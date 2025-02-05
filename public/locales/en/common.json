@@ -125,5 +125,23 @@
   },
   "footer": {
     "copyright": "MetaBitcoin Network Copyright @2024"
+  },
+  "blockchain": {
+    "title": "MetaBitcoin",
+    "mempool": "mempool",
+    "tx": "TX",
+    "timeWithin": "within 2 minutes",
+    "minutesAgo": " minutes ago",
+    "hoursAgo": " hours ago",
+    "daysAgo": " days ago",
+    "metablockDetails": "Metablock Details",
+    "blockProgressBar": "Block Progress Bar",
+    "blocks": " Blocks",
+    "tabs": {
+      "all": "All",
+      "consolidation": "Consolidation",
+      "coinjoin": "Coinjoin",
+      "data": "Data"
+    }
   }
 }

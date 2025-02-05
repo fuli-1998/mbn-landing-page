@@ -15,6 +15,7 @@ import { Share2, Film, Maximize, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { BlockchainVisualization } from "@/components/BlockchainVisualization";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -295,6 +296,8 @@ const LandingPage = () => {
     <div className="min-h-screen bg-black text-white scroll-smooth">
       <Header />
 
+      <BlockchainVisualization />
+
       {/* Hero Section */}
       <section
         id="what"
@@ -313,7 +316,7 @@ const LandingPage = () => {
             <p className="text-white/70 text-base md:text-xl lg:text-2xl leading-loose mb-8 md:mb-12">
               {t("hero.description")}
             </p>
-            <div className="space-y-4 md:space-y-6 bg-[#9B7C68]/10 p-4 md:p-6 rounded-xl">
+            <div className="space-y-4 md:space-y-6 bg-[#28211b] p-4 md:p-6 rounded-xl">
               {renderFeatures()}
             </div>
           </div>
@@ -321,7 +324,7 @@ const LandingPage = () => {
       </section>
 
       <div
-        className="bg-cover bg-center"
+        className="bg-cover bg-center min-h-screen"
         style={{
           backgroundImage: "url('/bg2.png')",
         }}
@@ -426,7 +429,7 @@ const LandingPage = () => {
       {/* How It Works Section */}
       <section
         id="how"
-        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden pb-12"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 overflow-hidden pb-12 min-h-screen"
       >
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-semibold leading-tight mb-6 md:mb-8 text-white/90 text-center">
@@ -477,7 +480,7 @@ const LandingPage = () => {
       {/* FAQ Section */}
       <section
         id="faq"
-        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden lg:min-h-[800px]"
+        className="scroll-mt-16 md:scroll-mt-24 pt-16 md:pt-24 relative overflow-hidden min-h-screen"
         style={{
           backgroundImage: "url('/faq-bg.png')",
           backgroundSize: "cover",
