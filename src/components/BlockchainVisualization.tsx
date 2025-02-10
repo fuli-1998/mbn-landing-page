@@ -21,7 +21,7 @@ const LoadingSkeleton = () => {
       <div className="flex justify-center">
         <Skeleton className="h-12 w-[300px]" />
       </div>
-      
+
       {/* Block Cards Skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
         {/* Mempool Card */}
@@ -30,16 +30,18 @@ const LoadingSkeleton = () => {
           <Skeleton className="h-[160px] w-full rounded-lg" />
           <div className="hidden md:block absolute right-[-16px] top-0 bottom-0 border-r border-dashed border-white/30" />
         </div>
-        
+
         {/* Block Cards */}
-        {Array(4).fill(null).map((_, i) => (
-          <div key={i} className="space-y-2">
-            <Skeleton className="h-6 w-24 mx-auto" />
-            <Skeleton className="h-[160px] w-full rounded-lg" />
-          </div>
-        ))}
+        {Array(4)
+          .fill(null)
+          .map((_, i) => (
+            <div key={i} className="space-y-2">
+              <Skeleton className="h-6 w-24 mx-auto" />
+              <Skeleton className="h-[160px] w-full rounded-lg" />
+            </div>
+          ))}
       </div>
-      
+
       {/* Progress Bar Section */}
       <div className="mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
@@ -57,9 +59,11 @@ const LoadingSkeleton = () => {
                   <Skeleton className="h-2 w-full rounded-full" />
                 </div>
                 <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
-                  {Array(5).fill(null).map((_, i) => (
-                    <Skeleton key={i} className="aspect-square rounded-lg" />
-                  ))}
+                  {Array(5)
+                    .fill(null)
+                    .map((_, i) => (
+                      <Skeleton key={i} className="aspect-square rounded-lg" />
+                    ))}
                 </div>
               </div>
             </div>
@@ -69,9 +73,11 @@ const LoadingSkeleton = () => {
               <Skeleton className="h-[80px] w-[140px] rounded-lg" />
               <div className="flex-1">
                 <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
-                  {Array(5).fill(null).map((_, i) => (
-                    <Skeleton key={i} className="aspect-square rounded-lg" />
-                  ))}
+                  {Array(5)
+                    .fill(null)
+                    .map((_, i) => (
+                      <Skeleton key={i} className="aspect-square rounded-lg" />
+                    ))}
                 </div>
               </div>
             </div>
@@ -102,16 +108,12 @@ export const BlockchainVisualization = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statistics, setStatistics] = useState<BlockStatistics[]>([]);
+  const [btcStep, setBtcStep] = useState<number>(0);
   const [mempoolStats, setMempoolStats] = useState<TxStatistics[]>([]);
-  const isTestnet = process.env.NEXT_PUBLIC_NETWORK === "testnet";
 
   const currentBlocks = useMemo(() => {
     return statistics.filter((stat) => stat.chainName === "Bitcoin").length;
   }, [statistics]);
-
-  const totalBlocks = useMemo(() => {
-    return Math.max(isTestnet ? 500 : 144, currentBlocks);
-  }, [isTestnet, currentBlocks]);
 
   useEffect(() => {
     const loadBlocks = async () => {
@@ -169,7 +171,8 @@ export const BlockchainVisualization = () => {
     try {
       const response = await fetchBlockStatistics(height);
       if (response.code === 0) {
-        setStatistics(response.data);
+        setStatistics(response.data.list);
+        setBtcStep(response.data.btcStep);
       }
     } catch (err) {
       console.error("Failed to fetch statistics:", err);
@@ -368,7 +371,7 @@ export const BlockchainVisualization = () => {
                           {t("blocks")}
                         </div>
                         <div className="text-white/50 text-sm lg:text-base">
-                          / {Math.max(totalBlocks, currentBlocks)}
+                          / {btcStep}
                         </div>
                       </div>
                     </div>
@@ -380,7 +383,7 @@ export const BlockchainVisualization = () => {
                             (statistics.filter(
                               (stat) => stat.chainName === "Bitcoin"
                             ).length /
-                              totalBlocks) *
+                              btcStep) *
                             100
                           }%`,
                         }}
