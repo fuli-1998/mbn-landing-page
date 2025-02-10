@@ -22,81 +22,586 @@ const LoadingSkeleton = () => {
         <Skeleton className="h-12 w-[300px]" />
       </div>
 
-      {/* Block Cards Skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
-        {/* Mempool Card */}
-        <div className="relative">
-          <Skeleton className="h-6 w-24 mx-auto mb-2" />
-          <Skeleton className="h-[160px] w-full rounded-lg" />
-          <div className="hidden md:block absolute right-[-16px] top-0 bottom-0 border-r border-dashed border-white/30" />
-        </div>
+      <BlockVisualizationSkeleton />
+      <ProgressBarSkeleton />
+    </div>
+  );
+};
 
-        {/* Block Cards */}
-        {Array(4)
-          .fill(null)
-          .map((_, i) => (
-            <div key={i} className="space-y-2">
+const BlockVisualizationSkeleton = () => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative animate-pulse">
+      {/* Mempool Card */}
+      <div className="relative">
+        <Skeleton className="h-6 w-24 mx-auto mb-2" />
+        <div className="bg-[#28211b] backdrop-blur-[40px] rounded-lg p-4 border border-white/10">
+          <div className="space-y-4">
+            <Skeleton className="h-8 w-32 mx-auto" />
+            <div className="space-y-2">
               <Skeleton className="h-6 w-24 mx-auto" />
-              <Skeleton className="h-[160px] w-full rounded-lg" />
+              <Skeleton className="h-6 w-24 mx-auto" />
             </div>
-          ))}
+            <Skeleton className="h-4 w-36 mx-auto" />
+          </div>
+        </div>
+        {/* Vertical Divider Line */}
+        <div className="hidden md:block absolute right-[-16px] top-0 bottom-0 border-r border-dashed border-white/30" />
       </div>
 
-      {/* Progress Bar Section */}
-      <div className="mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
-          {/* Left Column */}
-          <div className="w-full lg:w-auto lg:flex-1 space-y-6">
-            {/* BTC Section */}
-            <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
-              <Skeleton className="h-[80px] w-[140px] rounded-lg" />
-              <div className="flex-1 space-y-4">
+      {/* Block Cards */}
+      {Array(4)
+        .fill(null)
+        .map((_, index) => (
+          <div key={index}>
+            <Skeleton className="h-6 w-24 mx-auto mb-2" />
+            <div className="bg-[#28211b] backdrop-blur-[40px] rounded-lg p-4 border border-white/10">
+              <div className="space-y-4">
+                <Skeleton className="h-8 w-32 mx-auto" />
                 <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <Skeleton className="h-6 w-32" />
-                    <Skeleton className="h-6 w-24" />
-                  </div>
-                  <Skeleton className="h-2 w-full rounded-full" />
+                  <Skeleton className="h-6 w-24 mx-auto" />
+                  <Skeleton className="h-6 w-24 mx-auto" />
                 </div>
-                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
-                  {Array(5)
-                    .fill(null)
-                    .map((_, i) => (
-                      <Skeleton key={i} className="aspect-square rounded-lg" />
-                    ))}
-                </div>
+                <Skeleton className="h-4 w-36 mx-auto" />
               </div>
             </div>
+          </div>
+        ))}
+    </div>
+  );
+};
 
-            {/* MVC Section */}
-            <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
-              <Skeleton className="h-[80px] w-[140px] rounded-lg" />
-              <div className="flex-1">
-                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
-                  {Array(5)
-                    .fill(null)
-                    .map((_, i) => (
-                      <Skeleton key={i} className="aspect-square rounded-lg" />
-                    ))}
+const ProgressBarSkeleton = () => {
+  return (
+    <div className="mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
+        {/* Left Column */}
+        <div className="w-full lg:w-auto lg:flex-1 space-y-6">
+          {/* BTC Section */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+            <Skeleton className="h-[80px] w-[140px] rounded-lg" />
+            <div className="flex-1 space-y-4">
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Skeleton className="h-6 w-32" />
+                  <Skeleton className="h-6 w-24" />
                 </div>
+                <Skeleton className="h-2 w-full rounded-full" />
+              </div>
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
+                {Array(5)
+                  .fill(null)
+                  .map((_, i) => (
+                    <Skeleton key={i} className="aspect-square rounded-lg" />
+                  ))}
               </div>
             </div>
           </div>
 
-          {/* Right Column */}
-          <div className="lg:flex-shrink-0 bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 p-6 lg:p-[50px] md:min-w-[450px] space-y-6">
-            <Skeleton className="h-8 w-48 mx-auto" />
-            <div className="flex justify-between items-center mb-5">
-              <Skeleton className="h-8 w-32 rounded-full" />
-              <div className="flex items-center gap-4">
-                <Skeleton className="h-6 w-16" />
-                <Skeleton className="h-6 w-16" />
+          {/* MVC Section */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+            <Skeleton className="h-[80px] w-[140px] rounded-lg" />
+            <div className="flex-1">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
+                {Array(5)
+                  .fill(null)
+                  .map((_, i) => (
+                    <Skeleton key={i} className="aspect-square rounded-lg" />
+                  ))}
               </div>
             </div>
-            <Skeleton className="aspect-square w-full rounded-lg" />
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="lg:flex-shrink-0 bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 p-6 lg:p-[50px] md:min-w-[450px] space-y-6">
+          <Skeleton className="h-8 w-48 mx-auto" />
+          <div className="flex justify-between items-center mb-5">
+            <Skeleton className="h-8 w-32 rounded-full" />
+            <div className="flex items-center gap-4">
+              <Skeleton className="h-6 w-16" />
+              <Skeleton className="h-6 w-16" />
+            </div>
+          </div>
+          <Skeleton className="aspect-square w-full rounded-lg" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface ProgressBarSectionProps {
+  loading: boolean;
+  selectedBlock: string;
+  blocks: BlockData[];
+  statistics: BlockStatistics[];
+  btcStep: number;
+  currentBlocks: number;
+  formatTimeDisplay: (timestamp: number) => string;
+  t: (key: string) => string;
+}
+
+const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
+  loading,
+  selectedBlock,
+  blocks,
+  statistics,
+  btcStep,
+  currentBlocks,
+  formatTimeDisplay,
+  t,
+}) => {
+  if (loading) {
+    return <ProgressBarSkeleton />;
+  }
+
+  return (
+    <div
+      className={`mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50 relative
+        before:content-[''] before:absolute before:border-[16px] before:border-transparent before:border-b-[#F39800]/50 before:-mt-[1px]
+        before:transition-all before:duration-300 before:bottom-full before:-translate-x-1/2
+        after:content-[''] after:absolute after:border-[14px] after:border-transparent after:border-b-[#28211b]
+        after:transition-all after:duration-300 after:bottom-full after:-translate-x-1/2
+        animate-in fade-in duration-300
+        ${
+          selectedBlock === "mempool"
+            ? "before:left-[10%] after:left-[10%]"
+            : selectedBlock === blocks[3]?.header
+            ? "before:left-[91%] after:left-[91%]"
+            : selectedBlock === blocks[2]?.header
+            ? "before:left-[70%] after:left-[70%]"
+            : selectedBlock === blocks[1]?.header
+            ? "before:left-[50%] after:left-[50%]"
+            : selectedBlock === blocks[0]?.header
+            ? "before:left-[30%] after:left-[30%]"
+            : "before:opacity-0 after:opacity-0"
+        }`}
+    >
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
+        {/* Left Column */}
+        <div className="w-full lg:w-auto lg:flex-1">
+          {/* BTC Section */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center">
+            {/* BTC Label */}
+            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
+              <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
+                <Image
+                  src="/network/btc.png"
+                  alt="BTC"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5 lg:w-[22px] lg:h-[22px]"
+                />
+                <span className="text-white text-xl lg:text-[26px]">BTC</span>
+              </div>
+            </div>
+
+            {/* BTC Content */}
+            <div className="flex-1 w-full lg:w-auto bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10">
+              {/* Progress Bar */}
+              <div className="px-4 lg:px-[18px] py-3 space-y-4 lg:space-y-[18px]">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-white text-base lg:text-lg">
+                    {t("blockProgressBar")}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-[#FA9600] text-sm lg:text-base">
+                      {currentBlocks}
+                      {t("blocks")}
+                    </div>
+                    <div className="text-white/50 text-sm lg:text-base">
+                      / {btcStep}
+                    </div>
+                  </div>
+                </div>
+                <div className="h-2 bg-[#3D3935] rounded-full">
+                  <div
+                    className="h-full bg-[#FA9600] rounded-full"
+                    style={{
+                      width: `${
+                        (statistics.filter(
+                          (stat) => stat.chainName === "Bitcoin"
+                        ).length /
+                          Math.max(btcStep, currentBlocks)) *
+                        100
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* BTC Blocks */}
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3 p-4 lg:px-[18px] lg:pb-3">
+                {statistics
+                  .filter((stat) => stat.chainName === "Bitcoin")
+                  .sort((a, b) => a.blockHeight - b.blockHeight)
+                  .reduce((acc, block, index, array) => {
+                    if (index < 4) {
+                      acc.push(block);
+                    } else if (index === array.length - 1 && array.length > 4) {
+                      acc.push({ type: "ellipsis" } as const);
+                      acc.push(block);
+                    }
+                    return acc;
+                  }, [] as (BlockStatistics | { type: "ellipsis" })[])
+                  .map((item) => {
+                    if ("type" in item && item.type === "ellipsis") {
+                      return (
+                        <div
+                          key="ellipsis"
+                          className="text-white/50 self-center text-lg tracking-widest text-center"
+                        >
+                          ......
+                        </div>
+                      );
+                    }
+
+                    const block = item as BlockStatistics;
+                    return (
+                      <div
+                        key={block.blockHash}
+                        className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
+                      >
+                        <div className="text-[#6C655E] text-xs">
+                          # {block.blockHeight}
+                        </div>
+                        <div className="text-[#3D3935] font-semibold text-sm">
+                          {block.txCount} TX
+                        </div>
+                        <div className="text-[#6C655E] text-xs">
+                          {formatTimeDisplay(block.blockTime)}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+
+          {/* MVC Section */}
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center mt-6">
+            {/* MVC Label */}
+            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
+              <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
+                <Image
+                  src="/network/mvc.png"
+                  alt="MVC"
+                  width={20}
+                  height={20}
+                  className="w-5 h-5 lg:w-[22px] lg:h-[22px]"
+                />
+                <span className="text-white text-xl lg:text-[26px]">MVC</span>
+              </div>
+            </div>
+
+            {/* MVC Content */}
+            <div className="flex-1 w-full lg:w-auto bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 min-h-[200px]">
+              {/* MVC Blocks */}
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3 p-4 lg:px-[18px] lg:pb-3">
+                {statistics
+                  .filter((stat) => stat.chainName === "MVC")
+                  .sort((a, b) => a.blockHeight - b.blockHeight)
+                  .reduce((acc, block, index, array) => {
+                    if (index < 4) {
+                      acc.push(block);
+                    } else if (index === array.length - 1 && array.length > 4) {
+                      acc.push({ type: "ellipsis" } as const);
+                      acc.push(block);
+                    }
+                    return acc;
+                  }, [] as (BlockStatistics | { type: "ellipsis" })[])
+                  .map((item) => {
+                    if ("type" in item && item.type === "ellipsis") {
+                      return (
+                        <div
+                          key="ellipsis"
+                          className="text-white/50 self-center text-lg tracking-widest text-center"
+                        >
+                          ......
+                        </div>
+                      );
+                    }
+
+                    const block = item as BlockStatistics;
+                    return (
+                      <div
+                        key={block.blockHash}
+                        className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
+                      >
+                        <div className="text-[#6C655E] text-xs">
+                          # {block.blockHeight}
+                        </div>
+                        <div className="text-[#3D3935] font-semibold text-sm">
+                          {block.txCount} TX
+                        </div>
+                        <div className="text-[#6C655E] text-xs">
+                          {formatTimeDisplay(block.blockTime)}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="lg:flex-shrink-0 bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 py-6 lg:py-[50px] px-4 lg:px-[30px] md:min-w-[450px]">
+          <div className="text-xl lg:text-2xl font-medium text-white mb-4 text-center">
+            {t("metablockDetails")}
+          </div>
+
+          {/* Tabs and Network Toggle Container */}
+          <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-0 lg:justify-between mb-5">
+            {/* Tabs */}
+            <div className="flex space-x-4 bg-[#28211b] backdrop-blur-lg rounded-[40px] border border-[#47413D] px-4 py-2 overflow-x-auto scrollbar-none">
+              {[
+                { key: "all" },
+                // { key: "consolidation" },
+                // { key: "coinjoin" },
+                // { key: "data" },
+              ].map((tab, index) => (
+                <button
+                  key={tab.key}
+                  className={`text-xs font-medium rounded-full transition-colors ${
+                    index === 0
+                      ? "text-white"
+                      : "text-[#928D8A] hover:text-white"
+                  }`}
+                >
+                  {t(`tabs.${tab.key}`)}
+                </button>
+              ))}
+            </div>
+
+            {/* Network Toggle */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="size-3 rounded-sm bg-[#FA9600]"></div>
+                <span className="text-sm font-medium text-white">BTC</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="size-3 rounded-sm bg-[#8385F7]"></div>
+                <span className="text-sm font-medium text-white">MVC</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Visualization Area */}
+          <div className="grid grid-cols-[repeat(80,1fr)] grid-rows-[repeat(80,1fr)] w-full aspect-square">
+            {(() => {
+              const gridSize = 80;
+              const cells: {
+                row: number;
+                col: number;
+                size: number;
+                color: string;
+              }[] = [];
+
+              if (!statistics.length) return [];
+
+              const totalSize = statistics.reduce(
+                (sum, stat) => sum + stat.blockSize,
+                0
+              );
+
+              const getBlockCells = (blockSize: number) => {
+                const cellCount = Math.max(
+                  1,
+                  Math.floor((blockSize / totalSize) * (gridSize * gridSize))
+                );
+                const size = Math.min(
+                  16,
+                  Math.max(1, Math.floor(Math.sqrt(cellCount)))
+                );
+                return { cellCount, size };
+              };
+
+              const grid = Array(gridSize)
+                .fill(null)
+                .map(() => Array(gridSize).fill(false));
+
+              const isAreaAvailable = (
+                row: number,
+                col: number,
+                size: number
+              ) => {
+                if (row + size > gridSize || col + size > gridSize)
+                  return false;
+                for (let i = 0; i < size; i++) {
+                  for (let j = 0; j < size; j++) {
+                    if (grid[row + i][col + j]) return false;
+                  }
+                }
+                return true;
+              };
+
+              const markArea = (row: number, col: number, size: number) => {
+                for (let i = 0; i < size; i++) {
+                  for (let j = 0; j < size; j++) {
+                    grid[row + i][col + j] = true;
+                  }
+                }
+              };
+
+              const tryPlaceBlock = (
+                size: number,
+                chainName: string
+              ): boolean => {
+                const attempts = 1000;
+                for (let attempt = 0; attempt < attempts; attempt++) {
+                  const row = Math.floor(Math.random() * (gridSize - size + 1));
+                  const col = Math.floor(Math.random() * (gridSize - size + 1));
+
+                  if (isAreaAvailable(row, col, size)) {
+                    markArea(row, col, size);
+                    cells.push({
+                      row,
+                      col,
+                      size,
+                      color:
+                        chainName === "Bitcoin"
+                          ? "bg-[#FA9600]"
+                          : "bg-[#8385F7]",
+                    });
+                    return true;
+                  }
+                }
+                return false;
+              };
+
+              statistics.forEach((stat) => {
+                const { size } = getBlockCells(stat.blockSize);
+                let currentSize = size;
+                while (
+                  currentSize > 0 &&
+                  !tryPlaceBlock(currentSize, stat.chainName)
+                ) {
+                  currentSize--;
+                }
+              });
+
+              return cells.map((cell, i) => (
+                <div
+                  key={i}
+                  style={{
+                    gridColumn: `${cell.col + 1} / span ${cell.size}`,
+                    gridRow: `${cell.row + 1} / span ${cell.size}`,
+                    animationDelay: `${i * 2}ms`,
+                  }}
+                  className={`${cell.color} border border-black animate-in fade-in duration-300 fill-mode-both`}
+                />
+              ));
+            })()}
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+interface BlockVisualizationSectionProps {
+  loading: boolean;
+  selectedBlock: string;
+  blocks: BlockData[];
+  mempoolStats: TxStatistics[];
+  handleMempoolClick: () => void;
+  handleBlockClick: (block: BlockData) => void;
+  formatTimeDisplay: (timestamp: number) => string;
+  t: (key: string) => string;
+}
+
+const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
+  loading,
+  selectedBlock,
+  blocks,
+  mempoolStats,
+  handleMempoolClick,
+  handleBlockClick,
+  formatTimeDisplay,
+  t,
+}) => {
+  if (loading) {
+    return <BlockVisualizationSkeleton />;
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+      {/* Mempool Card */}
+      <div className="relative">
+        <div className="text-white text-center mb-2">{t("mempool")}</div>
+        <div
+          className={`bg-[#FA9600] rounded-lg p-4 cursor-pointer relative transition-all duration-200 ${
+            selectedBlock === "mempool" ? "ring-2 ring-white/30" : ""
+          }`}
+          onClick={handleMempoolClick}
+        >
+          <div className="text-center">
+            <div className="text-2xl font-bold text-[#090909] mb-4">
+              {t("tx")}:{" "}
+              {mempoolStats.reduce(
+                (sum, stat) => sum + (stat.txList?.length || 0),
+                0
+              )}
+            </div>
+            <div className="text-sm text-[#090909] space-y-1">
+              <div>
+                BTC:{" "}
+                {mempoolStats.find((stat) => stat.chainName === "Bitcoin")
+                  ?.txList?.length || 0}{" "}
+                TX
+              </div>
+              <div>
+                MVC:{" "}
+                {mempoolStats.find((stat) => stat.chainName === "MVC")?.txList
+                  ?.length || 0}{" "}
+                TX
+              </div>
+            </div>
+          </div>
+          <div className="text-xs text-[#090909]/80 mt-4 text-center">
+            {t("timeWithin")}
+          </div>
+        </div>
+        {/* Vertical Divider Line */}
+        <div className="hidden md:block absolute right-[-16px] top-0 bottom-0 border-r border-dashed border-white/30" />
+      </div>
+
+      {/* Block Cards */}
+      {blocks.map((block) => {
+        const btcChain = block.chains.find(
+          (chain) => chain.chain === "Bitcoin"
+        );
+        const mvcChain = block.chains.find((chain) => chain.chain === "MVC");
+        const timeDisplay = formatTimeDisplay(block.timestamp);
+
+        return (
+          <div key={block.header}>
+            <div className="text-white text-center mb-2">
+              # {block.metablockHeight}
+            </div>
+            <div
+              className={`rounded-lg p-4 cursor-pointer relative transition-all duration-200 ${
+                selectedBlock === block.header ? "ring-2 ring-white/30" : ""
+              }`}
+              style={{ backgroundColor: "#FFC060" }}
+              onClick={() => handleBlockClick(block)}
+            >
+              <div className="text-center">
+                <div className="text-2xl font-bold text-[#090909] mb-4">
+                  {t("tx")}: {block.txIndex}
+                </div>
+                <div className="text-sm text-[#090909] space-y-1">
+                  <div>BTC: {btcChain ? `${btcChain.endBlock} TX` : "N/A"}</div>
+                  <div>MVC: {mvcChain ? `${mvcChain.endBlock} TX` : "N/A"}</div>
+                </div>
+              </div>
+              <div className="text-xs text-[#090909]/80 mt-4 text-center">
+                {timeDisplay}
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -106,58 +611,85 @@ export const BlockchainVisualization = () => {
   const [selectedBlock, setSelectedBlock] = useState("103508");
   const [blocks, setBlocks] = useState<BlockData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [blocksLoading, setBlocksLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [statistics, setStatistics] = useState<BlockStatistics[]>([]);
   const [btcStep, setBtcStep] = useState<number>(0);
   const [mempoolStats, setMempoolStats] = useState<TxStatistics[]>([]);
+  const [currentHeight, setCurrentHeight] = useState<number>(-1);
+  const [statisticsLoading, setStatisticsLoading] = useState(false);
 
   const currentBlocks = useMemo(() => {
     return statistics.filter((stat) => stat.chainName === "Bitcoin").length;
   }, [statistics]);
 
+  const fetchLatestBlocks = async () => {
+    try {
+      setBlocksLoading(true);
+      const latestResponse = await fetchLatestBlock();
+      if (latestResponse.code === 0) {
+        const lastNumber = latestResponse.data.lastNumber;
+        // Calculate start position: latest block number minus 4
+        const from = Math.max(0, lastNumber - 3);
+        const to = lastNumber;
+
+        // Get block list
+        const blocksResponse = await fetchBlockList(from, to);
+        if (blocksResponse.code === 0) {
+          const blocks = blocksResponse.data;
+          setBlocks(blocks);
+        } else {
+          setError(blocksResponse.message);
+        }
+      } else {
+        setError(latestResponse.message);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load blocks");
+    } finally {
+      setBlocksLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadBlocks = async () => {
+    // 首次加载
+    const loadInitialData = async () => {
       try {
         setLoading(true);
-        // Get latest block info
-        const latestResponse = await fetchLatestBlock();
-
-        if (latestResponse.code === 0) {
-          const lastNumber = latestResponse.data.lastNumber;
-          // Calculate start position: latest block number minus 4
-          const from = Math.max(0, lastNumber - 3);
-          const to = lastNumber;
-
-          // Get block list
-          const blocksResponse = await fetchBlockList(from, to);
-          if (blocksResponse.code === 0) {
-            const blocks = blocksResponse.data;
-            setBlocks(blocks);
-
-            // Set selected block to latest and load its statistics
-            if (blocks.length > 0) {
-              const latestBlock = blocks[0];
-              setSelectedBlock(latestBlock.header);
-              fetchStatisticsData(latestBlock.metablockHeight);
-            }
-          } else {
-            setError(blocksResponse.message);
-          }
-        } else {
-          setError(latestResponse.message);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load blocks");
+        handleMempoolClick();
+        await fetchMempoolData();
+        await fetchLatestBlocks();
       } finally {
         setLoading(false);
       }
     };
 
-    loadBlocks();
+    loadInitialData();
+
+    // 设置10分钟定时器
+    const intervalId = setInterval(async () => {
+      await Promise.all([fetchLatestBlocks(), fetchMempoolData()]);
+    }, 10 * 60 * 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
+  useEffect(() => {
+    if (currentHeight === -1) {
+      const intervalId = setInterval(() => {
+        fetchStatisticsData(currentHeight);
+      }, 10 * 60 * 1000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [currentHeight]);
+
   const formatTimeDisplay = (timestamp: number) => {
-    const timeDiff = Math.floor((Date.now() / 1000 - timestamp) / 60); // 转换为分钟
+    const timeDiff = Math.floor((Date.now() / 1000 - timestamp) / 60);
     if (timeDiff < 60) {
       return `${timeDiff}${t("minutesAgo")}`;
     } else if (timeDiff < 24 * 60) {
@@ -169,6 +701,7 @@ export const BlockchainVisualization = () => {
 
   const fetchStatisticsData = async (height: number) => {
     try {
+      setStatisticsLoading(true);
       const response = await fetchBlockStatistics(height);
       if (response.code === 0) {
         setStatistics(response.data.list);
@@ -176,6 +709,8 @@ export const BlockchainVisualization = () => {
       }
     } catch (err) {
       console.error("Failed to fetch statistics:", err);
+    } finally {
+      setStatisticsLoading(false);
     }
   };
 
@@ -192,12 +727,15 @@ export const BlockchainVisualization = () => {
 
   const handleBlockClick = (block: BlockData) => {
     setSelectedBlock(block.header);
+    setCurrentHeight(block.metablockHeight);
     fetchStatisticsData(block.metablockHeight);
   };
 
-  useEffect(() => {
-    fetchMempoolData();
-  }, []);
+  const handleMempoolClick = () => {
+    setSelectedBlock("mempool");
+    setCurrentHeight(-1);
+    fetchStatisticsData(-1);
+  };
 
   if (loading) {
     return (
@@ -226,467 +764,27 @@ export const BlockchainVisualization = () => {
           {t("title")}
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
-          {/* Mempool Card */}
-          <div className="relative">
-            <div className="text-white text-center mb-2">{t("mempool")}</div>
-            <div
-              className={`bg-[#FA9600] rounded-lg p-4 cursor-pointer relative transition-all duration-200 ${
-                selectedBlock === "mempool" ? "ring-2 ring-white/30" : ""
-              }`}
-              onClick={() => {
-                setSelectedBlock("mempool");
-                fetchStatisticsData(-1);
-              }}
-            >
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#090909] mb-4">
-                  {t("tx")}:{" "}
-                  {mempoolStats.reduce(
-                    (sum, stat) => sum + (stat.txList?.length || 0),
-                    0
-                  )}
-                </div>
-                <div className="text-sm text-[#090909] space-y-1">
-                  <div>
-                    BTC:{" "}
-                    {mempoolStats.find((stat) => stat.chainName === "Bitcoin")
-                      ?.txList?.length || 0}{" "}
-                    TX
-                  </div>
-                  <div>
-                    MVC:{" "}
-                    {mempoolStats.find((stat) => stat.chainName === "MVC")
-                      ?.txList?.length || 0}{" "}
-                    TX
-                  </div>
-                </div>
-              </div>
-              <div className="text-xs text-[#090909]/80 mt-4 text-center">
-                {t("timeWithin")}
-              </div>
-            </div>
-            {/* Vertical Divider Line */}
-            <div className="hidden md:block absolute right-[-16px] top-0 bottom-0 border-r border-dashed border-white/30" />
-          </div>
+        <BlockVisualizationSection
+          loading={blocksLoading}
+          selectedBlock={selectedBlock}
+          blocks={blocks}
+          mempoolStats={mempoolStats}
+          handleMempoolClick={handleMempoolClick}
+          handleBlockClick={handleBlockClick}
+          formatTimeDisplay={formatTimeDisplay}
+          t={t}
+        />
 
-          {/* Block Cards */}
-          {blocks.map((block) => {
-            const btcChain = block.chains.find(
-              (chain) => chain.chain === "Bitcoin"
-            );
-            const mvcChain = block.chains.find(
-              (chain) => chain.chain === "MVC"
-            );
-            const timeDisplay = formatTimeDisplay(block.timestamp);
-
-            return (
-              <div key={block.header}>
-                <div className="text-white text-center mb-2">
-                  # {block.metablockHeight}
-                </div>
-                <div
-                  className={`rounded-lg p-4 cursor-pointer relative transition-all duration-200 ${
-                    selectedBlock === block.header ? "ring-2 ring-white/30" : ""
-                  }`}
-                  style={{ backgroundColor: "#FFC060" }}
-                  onClick={() => handleBlockClick(block)}
-                >
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#090909] mb-4">
-                      {t("tx")}: {block.txIndex}
-                    </div>
-                    <div className="text-sm text-[#090909] space-y-1">
-                      <div>
-                        BTC: {btcChain ? `${btcChain.endBlock} TX` : "N/A"}
-                      </div>
-                      <div>
-                        MVC: {mvcChain ? `${mvcChain.endBlock} TX` : "N/A"}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-xs text-[#090909]/80 mt-4 text-center">
-                    {timeDisplay}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Progress Bar Section */}
-        <div
-          className={`mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50 relative
-            before:content-[''] before:absolute before:border-[16px] before:border-transparent before:border-b-[#F39800]/50 before:-mt-[1px]
-            before:transition-all before:duration-300 before:bottom-full before:-translate-x-1/2
-            after:content-[''] after:absolute after:border-[14px] after:border-transparent after:border-b-[#28211b]
-            after:transition-all after:duration-300 after:bottom-full after:-translate-x-1/2
-            animate-in fade-in duration-300
-            ${
-              selectedBlock === "mempool"
-                ? "before:left-[10%] after:left-[10%]"
-                : selectedBlock === blocks[3]?.header
-                ? "before:left-[91%] after:left-[91%]"
-                : selectedBlock === blocks[2]?.header
-                ? "before:left-[70%] after:left-[70%]"
-                : selectedBlock === blocks[1]?.header
-                ? "before:left-[50%] after:left-[50%]"
-                : selectedBlock === blocks[0]?.header
-                ? "before:left-[30%] after:left-[30%]"
-                : "before:opacity-0 after:opacity-0"
-            }`}
-        >
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
-            {/* Left Column */}
-            <div className="w-full lg:w-auto lg:flex-1">
-              {/* BTC Section */}
-              <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center">
-                {/* BTC Label */}
-                <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
-                  <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
-                    <Image
-                      src="/network/btc.png"
-                      alt="BTC"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 lg:w-[22px] lg:h-[22px]"
-                    />
-                    <span className="text-white text-xl lg:text-[26px]">
-                      BTC
-                    </span>
-                  </div>
-                </div>
-
-                {/* BTC Content */}
-                <div className="flex-1 w-full lg:w-auto bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10">
-                  {/* Progress Bar */}
-                  <div className="px-4 lg:px-[18px] py-3 space-y-4 lg:space-y-[18px]">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="text-white text-base lg:text-lg">
-                        {t("blockProgressBar")}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="text-[#FA9600] text-sm lg:text-base">
-                          {currentBlocks}
-                          {t("blocks")}
-                        </div>
-                        <div className="text-white/50 text-sm lg:text-base">
-                          / {btcStep}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="h-2 bg-[#3D3935] rounded-full">
-                      <div
-                        className="h-full bg-[#FA9600] rounded-full"
-                        style={{
-                          width: `${
-                            (statistics.filter(
-                              (stat) => stat.chainName === "Bitcoin"
-                            ).length /
-                              btcStep) *
-                            100
-                          }%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  {/* BTC Blocks */}
-                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3 p-4 lg:px-[18px] lg:pb-3">
-                    {statistics
-                      .filter((stat) => stat.chainName === "Bitcoin")
-                      .sort((a, b) => a.blockHeight - b.blockHeight) // 按区块高度排序
-                      .reduce((acc, block, index, array) => {
-                        if (index < 4) {
-                          // 添加前4个
-                          acc.push(block);
-                        } else if (
-                          index === array.length - 1 &&
-                          array.length > 4
-                        ) {
-                          // 如果有超过4个区块，添加省略号和最后一个
-                          acc.push({ type: "ellipsis" } as const);
-                          acc.push(block);
-                        }
-                        return acc;
-                      }, [] as (BlockStatistics | { type: "ellipsis" })[])
-                      .map((item) => {
-                        if ("type" in item && item.type === "ellipsis") {
-                          return (
-                            <div
-                              key="ellipsis"
-                              className="text-white/50 self-center text-lg tracking-widest text-center"
-                            >
-                              ......
-                            </div>
-                          );
-                        }
-
-                        const block = item as BlockStatistics;
-                        return (
-                          <div
-                            key={block.blockHash}
-                            className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
-                          >
-                            <div className="text-[#6C655E] text-xs">
-                              # {block.blockHeight}
-                            </div>
-                            <div className="text-[#3D3935] font-semibold text-sm">
-                              {block.txCount} TX
-                            </div>
-                            <div className="text-[#6C655E] text-xs">
-                              {formatTimeDisplay(block.blockTime)}
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-              </div>
-
-              {/* MVC Section */}
-              <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center mt-6">
-                {/* MVC Label */}
-                <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
-                  <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
-                    <Image
-                      src="/network/mvc.png"
-                      alt="MVC"
-                      width={20}
-                      height={20}
-                      className="w-5 h-5 lg:w-[22px] lg:h-[22px]"
-                    />
-                    <span className="text-white text-xl lg:text-[26px]">
-                      MVC
-                    </span>
-                  </div>
-                </div>
-
-                {/* MVC Content */}
-                <div className="flex-1 w-full lg:w-auto bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10">
-                  {/* MVC Blocks */}
-                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3 p-4 lg:px-[18px] lg:pb-3">
-                    {statistics
-                      .filter((stat) => stat.chainName === "MVC")
-                      .sort((a, b) => a.blockHeight - b.blockHeight) // 按区块高度排序
-                      .reduce((acc, block, index, array) => {
-                        if (index < 4) {
-                          // 添加前4个
-                          acc.push(block);
-                        } else if (
-                          index === array.length - 1 &&
-                          array.length > 4
-                        ) {
-                          // 如果有超过4个区块，添加省略号和最后一个
-                          acc.push({ type: "ellipsis" } as const);
-                          acc.push(block);
-                        }
-                        return acc;
-                      }, [] as (BlockStatistics | { type: "ellipsis" })[])
-                      .map((item) => {
-                        if ("type" in item && item.type === "ellipsis") {
-                          return (
-                            <div
-                              key="ellipsis"
-                              className="text-white/50 self-center text-lg tracking-widest text-center"
-                            >
-                              ......
-                            </div>
-                          );
-                        }
-
-                        const block = item as BlockStatistics;
-                        return (
-                          <div
-                            key={block.blockHash}
-                            className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
-                          >
-                            <div className="text-[#6C655E] text-xs">
-                              # {block.blockHeight}
-                            </div>
-                            <div className="text-[#3D3935] font-semibold text-sm">
-                              {block.txCount} TX
-                            </div>
-                            <div className="text-[#6C655E] text-xs">
-                              {formatTimeDisplay(block.blockTime)}
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="lg:flex-shrink-0 bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 py-6 lg:py-[50px] px-4 lg:px-[30px] md:min-w-[450px]">
-              <div className="text-xl lg:text-2xl font-medium text-white mb-4 text-center">
-                {t("metablockDetails")}
-              </div>
-
-              {/* Tabs and Network Toggle Container */}
-              <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-0 lg:justify-between mb-5">
-                {/* Tabs */}
-                <div className="flex space-x-4 bg-[#28211b] backdrop-blur-lg rounded-[40px] border border-[#47413D] px-4 py-2 overflow-x-auto scrollbar-none">
-                  {[
-                    { key: "all" },
-                    // { key: "consolidation" },
-                    // { key: "coinjoin" },
-                    // { key: "data" },
-                  ].map((tab, index) => (
-                    <button
-                      key={tab.key}
-                      className={`text-xs font-medium rounded-full transition-colors ${
-                        index === 0
-                          ? "text-white"
-                          : "text-[#928D8A] hover:text-white"
-                      }`}
-                    >
-                      {t(`tabs.${tab.key}`)}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Network Toggle */}
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <div className="size-3 rounded-sm bg-[#FA9600]"></div>
-                    <span className="text-sm font-medium text-white">BTC</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="size-3 rounded-sm bg-[#8385F7]"></div>
-                    <span className="text-sm font-medium text-white">MVC</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Visualization Area */}
-              <div className="grid grid-cols-[repeat(80,1fr)] grid-rows-[repeat(80,1fr)] w-full aspect-square">
-                {(() => {
-                  const gridSize = 80;
-                  const cells: {
-                    row: number;
-                    col: number;
-                    size: number;
-                    color: string;
-                  }[] = [];
-
-                  // 如果没有统计数据，返回空数组
-                  if (!statistics.length) return [];
-
-                  // 计算总区块大小
-                  const totalSize = statistics.reduce(
-                    (sum, stat) => sum + stat.blockSize,
-                    0
-                  );
-
-                  // 根据区块大小分配格子数量
-                  const getBlockCells = (blockSize: number) => {
-                    // 计算这个区块应该占据的格子数量
-                    const cellCount = Math.max(
-                      1,
-                      Math.floor(
-                        (blockSize / totalSize) * (gridSize * gridSize)
-                      )
-                    );
-                    // 将格子数量转换为合适的方块大小
-                    const size = Math.min(
-                      16,
-                      Math.max(1, Math.floor(Math.sqrt(cellCount)))
-                    );
-                    return { cellCount, size };
-                  };
-
-                  // 创建 2D 数组来跟踪已使用的位置
-                  const grid = Array(gridSize)
-                    .fill(null)
-                    .map(() => Array(gridSize).fill(false));
-
-                  // 检查区域是否可用
-                  const isAreaAvailable = (
-                    row: number,
-                    col: number,
-                    size: number
-                  ) => {
-                    if (row + size > gridSize || col + size > gridSize)
-                      return false;
-                    for (let i = 0; i < size; i++) {
-                      for (let j = 0; j < size; j++) {
-                        if (grid[row + i][col + j]) return false;
-                      }
-                    }
-                    return true;
-                  };
-
-                  // 标记区域为已使用
-                  const markArea = (row: number, col: number, size: number) => {
-                    for (let i = 0; i < size; i++) {
-                      for (let j = 0; j < size; j++) {
-                        grid[row + i][col + j] = true;
-                      }
-                    }
-                  };
-
-                  // 尝试放置区块
-                  const tryPlaceBlock = (
-                    size: number,
-                    chainName: string
-                  ): boolean => {
-                    const attempts = 1000;
-                    for (let attempt = 0; attempt < attempts; attempt++) {
-                      const row = Math.floor(
-                        Math.random() * (gridSize - size + 1)
-                      );
-                      const col = Math.floor(
-                        Math.random() * (gridSize - size + 1)
-                      );
-
-                      if (isAreaAvailable(row, col, size)) {
-                        markArea(row, col, size);
-                        cells.push({
-                          row,
-                          col,
-                          size,
-                          color:
-                            chainName === "Bitcoin"
-                              ? "bg-[#FA9600]"
-                              : "bg-[#8385F7]",
-                        });
-                        return true;
-                      }
-                    }
-                    return false;
-                  };
-
-                  // 处理每个区块的统计数据
-                  statistics.forEach((stat) => {
-                    const { size } = getBlockCells(stat.blockSize);
-                    // 尝试放置区块，如果失败则尝试更小的尺寸
-                    let currentSize = size;
-                    while (
-                      currentSize > 0 &&
-                      !tryPlaceBlock(currentSize, stat.chainName)
-                    ) {
-                      currentSize--;
-                    }
-                  });
-
-                  return cells.map((cell, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        gridColumn: `${cell.col + 1} / span ${cell.size}`,
-                        gridRow: `${cell.row + 1} / span ${cell.size}`,
-                        animationDelay: `${i * 2}ms`,
-                      }}
-                      className={`${cell.color} border border-black animate-in fade-in duration-300 fill-mode-both`}
-                    />
-                  ));
-                })()}
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProgressBarSection
+          loading={statisticsLoading}
+          selectedBlock={selectedBlock}
+          blocks={blocks}
+          statistics={statistics}
+          btcStep={btcStep}
+          currentBlocks={currentBlocks}
+          formatTimeDisplay={formatTimeDisplay}
+          t={t}
+        />
       </div>
     </section>
   );
