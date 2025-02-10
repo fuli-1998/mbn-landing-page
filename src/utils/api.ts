@@ -47,6 +47,12 @@ export interface BlockStatistics {
   blockFee: number;
 }
 
+// 添加新的区块统计响应接口
+export interface BlockStatisticsResponse {
+  list: BlockStatistics[];
+  btcStep: number;
+}
+
 interface TxInfo {
   txHash: string;
   txSize: number;
@@ -112,8 +118,8 @@ export const fetchLatestBlock = async (): Promise<
 // 获取区块统计数据的函数
 export const fetchBlockStatistics = async (
   height: number
-): Promise<ApiResponse<BlockStatistics[]>> => {
-  return fetchApi<BlockStatistics[]>(
+): Promise<ApiResponse<BlockStatisticsResponse>> => {
+  return fetchApi<BlockStatisticsResponse>(
     `/api/statistics/metablock?height=${height}`
   );
 };
