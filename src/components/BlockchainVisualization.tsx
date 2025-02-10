@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   fetchBlockList,
   fetchLatestBlock,
@@ -13,6 +14,93 @@ import {
 } from "@/utils/api";
 import { useTranslations } from "next-intl";
 
+const LoadingSkeleton = () => {
+  return (
+    <div className="space-y-8">
+      {/* Title Skeleton */}
+      <div className="flex justify-center">
+        <Skeleton className="h-12 w-[300px]" />
+      </div>
+
+      {/* Block Cards Skeleton */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+        {/* Mempool Card */}
+        <div className="relative">
+          <Skeleton className="h-6 w-24 mx-auto mb-2" />
+          <Skeleton className="h-[160px] w-full rounded-lg" />
+          <div className="hidden md:block absolute right-[-16px] top-0 bottom-0 border-r border-dashed border-white/30" />
+        </div>
+
+        {/* Block Cards */}
+        {Array(4)
+          .fill(null)
+          .map((_, i) => (
+            <div key={i} className="space-y-2">
+              <Skeleton className="h-6 w-24 mx-auto" />
+              <Skeleton className="h-[160px] w-full rounded-lg" />
+            </div>
+          ))}
+      </div>
+
+      {/* Progress Bar Section */}
+      <div className="mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
+          {/* Left Column */}
+          <div className="w-full lg:w-auto lg:flex-1 space-y-6">
+            {/* BTC Section */}
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+              <Skeleton className="h-[80px] w-[140px] rounded-lg" />
+              <div className="flex-1 space-y-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="h-6 w-24" />
+                  </div>
+                  <Skeleton className="h-2 w-full rounded-full" />
+                </div>
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
+                  {Array(5)
+                    .fill(null)
+                    .map((_, i) => (
+                      <Skeleton key={i} className="aspect-square rounded-lg" />
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            {/* MVC Section */}
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+              <Skeleton className="h-[80px] w-[140px] rounded-lg" />
+              <div className="flex-1">
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3">
+                  {Array(5)
+                    .fill(null)
+                    .map((_, i) => (
+                      <Skeleton key={i} className="aspect-square rounded-lg" />
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="lg:flex-shrink-0 bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 p-6 lg:p-[50px] md:min-w-[450px] space-y-6">
+            <Skeleton className="h-8 w-48 mx-auto" />
+            <div className="flex justify-between items-center mb-5">
+              <Skeleton className="h-8 w-32 rounded-full" />
+              <div className="flex items-center gap-4">
+                <Skeleton className="h-6 w-16" />
+                <Skeleton className="h-6 w-16" />
+              </div>
+            </div>
+            <Skeleton className="aspect-square w-full rounded-lg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const BlockchainVisualization = () => {
   const t = useTranslations("blockchain");
   const [selectedBlock, setSelectedBlock] = useState("103508");
@@ -20,30 +108,33 @@ export const BlockchainVisualization = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statistics, setStatistics] = useState<BlockStatistics[]>([]);
+  const [btcStep, setBtcStep] = useState<number>(0);
   const [mempoolStats, setMempoolStats] = useState<TxStatistics[]>([]);
-  const isTestnet = process.env.NEXT_PUBLIC_NETWORK === "testnet";
-  const totalBlocks = isTestnet ? 500 : 144;
+
+  const currentBlocks = useMemo(() => {
+    return statistics.filter((stat) => stat.chainName === "Bitcoin").length;
+  }, [statistics]);
 
   useEffect(() => {
     const loadBlocks = async () => {
       try {
         setLoading(true);
-        // 先获取最新区块信息
+        // Get latest block info
         const latestResponse = await fetchLatestBlock();
 
         if (latestResponse.code === 0) {
           const lastNumber = latestResponse.data.lastNumber;
-          // 计算起始位置：最新区块号减4
+          // Calculate start position: latest block number minus 4
           const from = Math.max(0, lastNumber - 3);
           const to = lastNumber;
 
-          // 获取区块列表
+          // Get block list
           const blocksResponse = await fetchBlockList(from, to);
           if (blocksResponse.code === 0) {
             const blocks = blocksResponse.data;
             setBlocks(blocks);
 
-            // 设置选中最新的区块并加载其统计数据
+            // Set selected block to latest and load its statistics
             if (blocks.length > 0) {
               const latestBlock = blocks[0];
               setSelectedBlock(latestBlock.header);
@@ -80,7 +171,8 @@ export const BlockchainVisualization = () => {
     try {
       const response = await fetchBlockStatistics(height);
       if (response.code === 0) {
-        setStatistics(response.data);
+        setStatistics(response.data.list);
+        setBtcStep(response.data.btcStep);
       }
     } catch (err) {
       console.error("Failed to fetch statistics:", err);
@@ -108,11 +200,23 @@ export const BlockchainVisualization = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // 你可以替换成更好的加载状态UI
+    return (
+      <section className="bg-black min-h-screen pt-16 md:pt-24 pb-8">
+        <div className="container mx-auto px-4">
+          <LoadingSkeleton />
+        </div>
+      </section>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>; // 你可以替换成更好的错误状态UI
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="bg-red-500/10 text-red-500 p-4 rounded-lg">
+          错误: {error}
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -263,15 +367,11 @@ export const BlockchainVisualization = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-[#FA9600] text-sm lg:text-base">
-                          {
-                            statistics.filter(
-                              (stat) => stat.chainName === "Bitcoin"
-                            ).length
-                          }
+                          {currentBlocks}
                           {t("blocks")}
                         </div>
                         <div className="text-white/50 text-sm lg:text-base">
-                          / {totalBlocks}
+                          / {btcStep}
                         </div>
                       </div>
                     </div>
@@ -283,7 +383,7 @@ export const BlockchainVisualization = () => {
                             (statistics.filter(
                               (stat) => stat.chainName === "Bitcoin"
                             ).length /
-                              totalBlocks) *
+                              btcStep) *
                             100
                           }%`,
                         }}

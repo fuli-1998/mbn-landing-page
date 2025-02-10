@@ -1,17 +1,8 @@
 import { routing } from "@/i18n/routing";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-// import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import "../globals.css";
-
-import { Hanken_Grotesk } from "next/font/google";
-
-const hankenGrotesk = Hanken_Grotesk({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-hanken-grotesk",
-});
 
 export default async function LocaleLayout({
   children,
@@ -31,7 +22,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   return (
     <html lang={locale}>
-      <body className={`${hankenGrotesk.variable} antialiased`}>
+      <body className={`font-hanken antialiased`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
