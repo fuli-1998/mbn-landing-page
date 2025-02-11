@@ -6,6 +6,11 @@ export interface Chain {
   endBlock: string;
 }
 
+export interface BlockTxCount {
+  totalTxCount: number;
+  metaIdTxCount: number;
+}
+
 export interface BlockData {
   header: string;
   preHeader: string;
@@ -15,6 +20,11 @@ export interface BlockData {
   timestamp: number;
   txHash: string;
   txIndex: number;
+  step: number;
+  blockTxCount: {
+    Bitcoin: BlockTxCount;
+    MVC: BlockTxCount;
+  };
 }
 
 export interface ApiResponse<T> {
