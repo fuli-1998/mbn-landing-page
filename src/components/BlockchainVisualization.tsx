@@ -541,14 +541,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
           <div className="text-center">
             <div className="text-2xl font-bold text-[#090909] mb-4">
               {t("tx")}:{" "}
-              {blockInfo ? (
-                blockInfo.blockTxCount.Bitcoin.totalTxCount + blockInfo.blockTxCount.MVC.totalTxCount
-              ) : (
-                mempoolStats.reduce(
-                  (sum, stat) => sum + (stat.txList?.length || 0),
-                  0
-                )
-              )}
+              {(blockInfo?.blockTxCount?.Bitcoin?.totalTxCount ?? 0) + (blockInfo?.blockTxCount?.MVC?.totalTxCount ?? 0)}
             </div>
             <div className="text-sm text-[#090909] space-y-1">
               <div>
@@ -597,7 +590,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
             >
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#090909] mb-4">
-                  {t("tx")}: {block.txIndex}
+                  {t("tx")}: {block.blockTxCount.Bitcoin.totalTxCount + block.blockTxCount.MVC.totalTxCount}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
                   <div>
