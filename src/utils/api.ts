@@ -1,4 +1,4 @@
-// 定义接口返回的数据类型
+// Interface definitions
 export interface Chain {
   chain: string;
   preEndBlock: string;
@@ -15,7 +15,7 @@ export interface BlockData {
   header: string;
   preHeader: string;
   metablockHeight: number;
-  chains: Chain[];
+  chains: Chain[] | null;
   onChain: string;
   timestamp: number;
   txHash: string;
@@ -33,7 +33,7 @@ export interface ApiResponse<T> {
   message: string;
 }
 
-// 添加最新区块数据的接口类型
+// Latest block data response type
 export interface LatestBlockResponse {
   blockData: BlockData;
   init: number;
@@ -41,7 +41,7 @@ export interface LatestBlockResponse {
   step: number;
 }
 
-// 添加统计数据的接口类型
+// Block statistics type
 export interface BlockStatistics {
   metablockHeight: number;
   metablockHeader: string;
@@ -57,7 +57,7 @@ export interface BlockStatistics {
   blockFee: number;
 }
 
-// 添加新的区块统计响应接口
+// Block statistics response type
 export interface BlockStatisticsResponse {
   list: BlockStatistics[];
   btcStep: number;
@@ -75,13 +75,13 @@ export interface TxStatistics {
   txList: TxInfo[] | null;
 }
 
-// 获取API基础URL的函数
+// Get API base URL
 const getApiBaseUrl = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   return baseUrl;
 };
 
-// 通用的fetch封装
+// Generic fetch wrapper
 const fetchApi = async <T>(
   endpoint: string,
   options: RequestInit = {}
@@ -110,7 +110,7 @@ const fetchApi = async <T>(
   }
 };
 
-// 获取区块列表的具体函数
+// Fetch block list
 export const fetchBlockList = async (
   from: number,
   to: number
@@ -118,14 +118,14 @@ export const fetchBlockList = async (
   return fetchApi<BlockData[]>(`/api/block/list?from=${from}&to=${to}`);
 };
 
-// 获取最新区块的函数
+// Fetch latest block
 export const fetchLatestBlock = async (): Promise<
   ApiResponse<LatestBlockResponse>
 > => {
   return fetchApi<LatestBlockResponse>("/api/block/latest");
 };
 
-// 获取区块统计数据的函数
+// Fetch block statistics
 export const fetchBlockStatistics = async (
   height: number
 ): Promise<ApiResponse<BlockStatisticsResponse>> => {
@@ -134,7 +134,14 @@ export const fetchBlockStatistics = async (
   );
 };
 
-// 获取交易统计数据的函数
+// Fetch block info
+export const fetchBlockInfo = async (
+  number: number
+): Promise<ApiResponse<BlockData>> => {
+  return fetchApi<BlockData>(`/api/block/info?number=${number}`);
+};
+
+// Fetch transaction statistics
 export const fetchTxStatistics = async (
   height: number
 ): Promise<ApiResponse<TxStatistics[]>> => {

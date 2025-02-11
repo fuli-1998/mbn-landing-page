@@ -8,6 +8,7 @@ import {
   fetchLatestBlock,
   fetchBlockStatistics,
   fetchTxStatistics,
+  fetchBlockInfo,
   BlockData,
   BlockStatistics,
   TxStatistics,
@@ -504,6 +505,7 @@ interface BlockVisualizationSectionProps {
   selectedBlock: string;
   blocks: BlockData[];
   mempoolStats: TxStatistics[];
+  blockInfo: BlockData | null;
   handleMempoolClick: () => void;
   handleBlockClick: (block: BlockData) => void;
   formatTimeDisplay: (timestamp: number) => string;
@@ -515,6 +517,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
   selectedBlock,
   blocks,
   mempoolStats,
+  blockInfo,
   handleMempoolClick,
   handleBlockClick,
   formatTimeDisplay,
@@ -538,23 +541,33 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
           <div className="text-center">
             <div className="text-2xl font-bold text-[#090909] mb-4">
               {t("tx")}:{" "}
-              {mempoolStats.reduce(
-                (sum, stat) => sum + (stat.txList?.length || 0),
-                0
+              {blockInfo ? (
+                blockInfo.blockTxCount.Bitcoin.totalTxCount + blockInfo.blockTxCount.MVC.totalTxCount
+              ) : (
+                mempoolStats.reduce(
+                  (sum, stat) => sum + (stat.txList?.length || 0),
+                  0
+                )
               )}
             </div>
             <div className="text-sm text-[#090909] space-y-1">
               <div>
                 BTC:{" "}
-                {mempoolStats.find((stat) => stat.chainName === "Bitcoin")
-                  ?.txList?.length || 0}{" "}
-                TX
+                {blockInfo ? (
+                  `${blockInfo.blockTxCount.Bitcoin.totalTxCount} TX`
+                ) : (
+                  `${mempoolStats.find((stat) => stat.chainName === "Bitcoin")
+                    ?.txList?.length || 0} TX`
+                )}
               </div>
               <div>
                 MVC:{" "}
-                {mempoolStats.find((stat) => stat.chainName === "MVC")?.txList
-                  ?.length || 0}{" "}
-                TX
+                {blockInfo ? (
+                  `${blockInfo.blockTxCount.MVC.totalTxCount} TX`
+                ) : (
+                  `${mempoolStats.find((stat) => stat.chainName === "MVC")?.txList
+                    ?.length || 0} TX`
+                )}
               </div>
             </div>
           </div>
@@ -628,6 +641,7 @@ export const BlockchainVisualization = () => {
   const [mempoolStats, setMempoolStats] = useState<TxStatistics[]>([]);
   const [currentHeight, setCurrentHeight] = useState<number>(-1);
   const [statisticsLoading, setStatisticsLoading] = useState(false);
+  const [blockInfo, setBlockInfo] = useState<BlockData | null>(null);
 
   const currentBlocks = useMemo(() => {
     return statistics.filter((stat) => stat.chainName === "Bitcoin").length;
@@ -639,11 +653,9 @@ export const BlockchainVisualization = () => {
       const latestResponse = await fetchLatestBlock();
       if (latestResponse.code === 0) {
         const lastNumber = latestResponse.data.lastNumber;
-        // Calculate start position: latest block number minus 4
         const from = Math.max(0, lastNumber - 3);
         const to = lastNumber;
 
-        // Get block list
         const blocksResponse = await fetchBlockList(from, to);
         if (blocksResponse.code === 0) {
           const blocks = blocksResponse.data;
@@ -661,14 +673,35 @@ export const BlockchainVisualization = () => {
     }
   };
 
+  const fetchMempoolData = async () => {
+    try {
+      const [txStatsResponse, blockInfoResponse] = await Promise.all([
+        fetchTxStatistics(-1),
+        fetchBlockInfo(-1)
+      ]);
+      
+      if (txStatsResponse.code === 0) {
+        setMempoolStats(txStatsResponse.data);
+      }
+      
+      if (blockInfoResponse.code === 0) {
+        setBlockInfo(blockInfoResponse.data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch mempool data:", err);
+    }
+  };
+
   useEffect(() => {
-    // 首次加载
+    // Initial load
     const loadInitialData = async () => {
       try {
         setLoading(true);
         handleMempoolClick();
-        await fetchMempoolData();
-        await fetchLatestBlocks();
+        await Promise.all([
+          fetchMempoolData(),
+          fetchLatestBlocks()
+        ]);
       } finally {
         setLoading(false);
       }
@@ -676,13 +709,16 @@ export const BlockchainVisualization = () => {
 
     loadInitialData();
 
-    // 设置10分钟定时器
-    const intervalId = setInterval(async () => {
-      await Promise.all([fetchLatestBlocks(), fetchMempoolData()]);
+    // Set up 10-minute refresh intervals
+    const refreshIntervalId = setInterval(async () => {
+      await Promise.all([
+        fetchLatestBlocks(),
+        fetchMempoolData()
+      ]);
     }, 10 * 60 * 1000);
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(refreshIntervalId);
     };
   }, []);
 
@@ -721,17 +757,6 @@ export const BlockchainVisualization = () => {
       console.error("Failed to fetch statistics:", err);
     } finally {
       setStatisticsLoading(false);
-    }
-  };
-
-  const fetchMempoolData = async () => {
-    try {
-      const response = await fetchTxStatistics(-1);
-      if (response.code === 0) {
-        setMempoolStats(response.data);
-      }
-    } catch (err) {
-      console.error("Failed to fetch mempool data:", err);
     }
   };
 
@@ -779,6 +804,7 @@ export const BlockchainVisualization = () => {
           selectedBlock={selectedBlock}
           blocks={blocks}
           mempoolStats={mempoolStats}
+          blockInfo={blockInfo}
           handleMempoolClick={handleMempoolClick}
           handleBlockClick={handleBlockClick}
           formatTimeDisplay={formatTimeDisplay}
