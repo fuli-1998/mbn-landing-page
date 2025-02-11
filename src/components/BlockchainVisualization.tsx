@@ -159,9 +159,9 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
     <div
       className={`mt-12 bg-[#28211b] backdrop-blur-[40px] rounded-2xl p-4 md:p-8 border border-[#F39800]/50 relative
         before:content-[''] before:absolute before:border-[16px] before:border-transparent before:border-b-[#F39800]/50 before:-mt-[1px]
-        before:transition-all before:duration-300 before:bottom-full before:-translate-x-1/2
+        before:transition-all before:duration-300 before:bottom-full before:-translate-x-1/2 before:hidden md:before:block
         after:content-[''] after:absolute after:border-[14px] after:border-transparent after:border-b-[#28211b]
-        after:transition-all after:duration-300 after:bottom-full after:-translate-x-1/2
+        after:transition-all after:duration-300 after:bottom-full after:-translate-x-1/2 after:hidden md:after:block
         animate-in fade-in duration-300
         ${
           selectedBlock === "mempool"
@@ -183,7 +183,7 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
           {/* BTC Section */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center">
             {/* BTC Label */}
-            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
+            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:hidden lg:before:block after:hidden lg:after:block before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
               <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
                 <Image
                   src="/network/btc.png"
@@ -281,7 +281,7 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
           {/* MVC Section */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center mt-6">
             {/* MVC Label */}
-            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
+            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:hidden lg:before:block after:hidden lg:after:block before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
               <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
                 <Image
                   src="/network/mvc.png"
@@ -541,14 +541,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
           <div className="text-center">
             <div className="text-2xl font-bold text-[#090909] mb-4">
               {t("tx")}:{" "}
-              {blockInfo ? (
-                blockInfo.blockTxCount.Bitcoin.totalTxCount + blockInfo.blockTxCount.MVC.totalTxCount
-              ) : (
-                mempoolStats.reduce(
-                  (sum, stat) => sum + (stat.txList?.length || 0),
-                  0
-                )
-              )}
+              {(blockInfo?.blockTxCount?.Bitcoin?.totalTxCount ?? 0) + (blockInfo?.blockTxCount?.MVC?.totalTxCount ?? 0)}
             </div>
             <div className="text-sm text-[#090909] space-y-1">
               <div>
@@ -597,7 +590,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
             >
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#090909] mb-4">
-                  {t("tx")}: {block.txIndex}
+                  {t("tx")}: {block.blockTxCount.Bitcoin.totalTxCount + block.blockTxCount.MVC.totalTxCount}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
                   <div>
