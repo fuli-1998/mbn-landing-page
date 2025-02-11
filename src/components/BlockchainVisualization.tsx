@@ -568,10 +568,6 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
 
       {/* Block Cards */}
       {blocks.map((block) => {
-        const btcChain = block.chains.find(
-          (chain) => chain.chain === "Bitcoin"
-        );
-        const mvcChain = block.chains.find((chain) => chain.chain === "MVC");
         const timeDisplay = formatTimeDisplay(block.timestamp);
 
         return (
@@ -591,8 +587,22 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
                   {t("tx")}: {block.txIndex}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
-                  <div>BTC: {btcChain ? `${btcChain.endBlock} TX` : "N/A"}</div>
-                  <div>MVC: {mvcChain ? `${mvcChain.endBlock} TX` : "N/A"}</div>
+                  <div>
+                    BTC:{" "}
+                    {block.blockTxCount.Bitcoin ? (
+                      <>{block.blockTxCount.Bitcoin.totalTxCount} TX</>
+                    ) : (
+                      "N/A"
+                    )}
+                  </div>
+                  <div>
+                    MVC:{" "}
+                    {block.blockTxCount.MVC ? (
+                      <>{block.blockTxCount.MVC.totalTxCount} TX</>
+                    ) : (
+                      "N/A"
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="text-xs text-[#090909]/80 mt-4 text-center">
