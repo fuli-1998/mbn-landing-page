@@ -573,7 +573,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
       </div>
 
       {/* Block Cards */}
-      {blocks.map((block) => {
+      {blocks?.map((block) => {
         const timeDisplay = formatTimeDisplay(block.timestamp);
 
         return (
