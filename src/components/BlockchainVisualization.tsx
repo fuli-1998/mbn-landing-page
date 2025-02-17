@@ -388,7 +388,7 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
           </div>
 
           {/* Visualization Area */}
-          <div className="grid grid-cols-[repeat(80,1fr)] grid-rows-[repeat(80,1fr)] w-full aspect-square">
+          <div className="grid grid-cols-[repeat(80,1fr)] grid-rows-[repeat(80,1fr)] w-full aspect-square shadow-inner bg-black/30 rounded-lg overflow-hidden">
             {(() => {
               const gridSize = 80;
               const cells: {
@@ -541,26 +541,27 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
           <div className="text-center">
             <div className="text-2xl font-bold text-[#090909] mb-4">
               {t("tx")}:{" "}
-              {(blockInfo?.blockTxCount?.Bitcoin?.totalTxCount ?? 0) + (blockInfo?.blockTxCount?.MVC?.totalTxCount ?? 0)}
+              {(blockInfo?.blockTxCount?.Bitcoin?.totalTxCount ?? 0) +
+                (blockInfo?.blockTxCount?.MVC?.totalTxCount ?? 0)}
             </div>
             <div className="text-sm text-[#090909] space-y-1">
               <div>
                 BTC:{" "}
-                {blockInfo ? (
-                  `${blockInfo.blockTxCount.Bitcoin.totalTxCount} TX`
-                ) : (
-                  `${mempoolStats.find((stat) => stat.chainName === "Bitcoin")
-                    ?.txList?.length || 0} TX`
-                )}
+                {blockInfo
+                  ? `${blockInfo.blockTxCount.Bitcoin?.totalTxCount || 0} TX`
+                  : `${
+                      mempoolStats.find((stat) => stat.chainName === "Bitcoin")
+                        ?.txList?.length || 0
+                    } TX`}
               </div>
               <div>
                 MVC:{" "}
-                {blockInfo ? (
-                  `${blockInfo.blockTxCount.MVC.totalTxCount} TX`
-                ) : (
-                  `${mempoolStats.find((stat) => stat.chainName === "MVC")?.txList
-                    ?.length || 0} TX`
-                )}
+                {blockInfo
+                  ? `${blockInfo.blockTxCount.MVC?.totalTxCount || 0} TX`
+                  : `${
+                      mempoolStats.find((stat) => stat.chainName === "MVC")
+                        ?.txList?.length || 0
+                    } TX`}
               </div>
             </div>
           </div>
@@ -590,13 +591,16 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
             >
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#090909] mb-4">
-                  {t("tx")}: {block.blockTxCount.Bitcoin.totalTxCount + block.blockTxCount.MVC.totalTxCount}
+                  {t("tx")}:{" "}
+                  {block.blockTxCount.Bitcoin?.totalTxCount ||
+                    0 + block.blockTxCount.MVC?.totalTxCount ||
+                    0}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
                   <div>
                     BTC:{" "}
                     {block.blockTxCount.Bitcoin ? (
-                      <>{block.blockTxCount.Bitcoin.totalTxCount} TX</>
+                      <>{block.blockTxCount.Bitcoin?.totalTxCount} TX</>
                     ) : (
                       "N/A"
                     )}
@@ -604,7 +608,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
                   <div>
                     MVC:{" "}
                     {block.blockTxCount.MVC ? (
-                      <>{block.blockTxCount.MVC.totalTxCount} TX</>
+                      <>{block.blockTxCount.MVC?.totalTxCount} TX</>
                     ) : (
                       "N/A"
                     )}
@@ -670,13 +674,13 @@ export const BlockchainVisualization = () => {
     try {
       const [txStatsResponse, blockInfoResponse] = await Promise.all([
         fetchTxStatistics(-1),
-        fetchBlockInfo(-1)
+        fetchBlockInfo(-1),
       ]);
-      
+
       if (txStatsResponse.code === 0) {
         setMempoolStats(txStatsResponse.data);
       }
-      
+
       if (blockInfoResponse.code === 0) {
         setBlockInfo(blockInfoResponse.data);
       }
@@ -691,10 +695,7 @@ export const BlockchainVisualization = () => {
       try {
         setLoading(true);
         handleMempoolClick();
-        await Promise.all([
-          fetchMempoolData(),
-          fetchLatestBlocks()
-        ]);
+        await Promise.all([fetchMempoolData(), fetchLatestBlocks()]);
       } finally {
         setLoading(false);
       }
@@ -704,10 +705,7 @@ export const BlockchainVisualization = () => {
 
     // Set up 10-minute refresh intervals
     const refreshIntervalId = setInterval(async () => {
-      await Promise.all([
-        fetchLatestBlocks(),
-        fetchMempoolData()
-      ]);
+      await Promise.all([fetchLatestBlocks(), fetchMempoolData()]);
     }, 10 * 60 * 1000);
 
     return () => {
