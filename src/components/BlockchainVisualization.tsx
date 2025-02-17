@@ -533,7 +533,7 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
       <div className="relative">
         <div className="text-white text-center mb-2">{t("mempool")}</div>
         <div
-          className={`bg-[#FA9600] rounded-lg p-4 cursor-pointer relative transition-all duration-200 ${
+          className={`bg-[#FA9600] rounded-lg p-4 cursor-pointer relative transition-all duration-3000 animate-pulse-slow ${
             selectedBlock === "mempool" ? "ring-2 ring-white/30" : ""
           }`}
           onClick={handleMempoolClick}
