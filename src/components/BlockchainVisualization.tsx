@@ -281,7 +281,7 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
           {/* MVC Section */}
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start lg:items-center mt-6">
             {/* MVC Label */}
-            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#FFA317] rounded-lg p-3 lg:p-4 flex items-center before:hidden lg:before:block after:hidden lg:after:block before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#FFA317] before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
+            <div className="relative h-[60px] lg:h-[80px] w-[120px] lg:w-[140px] bg-[#28211b] border border-[#8385F7]/70 rounded-lg p-3 lg:p-4 flex items-center before:hidden lg:before:block after:hidden lg:after:block before:content-[''] before:absolute before:left-full before:top-1/2 before:border-[11px] before:border-transparent before:border-l-[#8385F7]/70 before:-mt-[11px] after:content-[''] after:absolute after:left-full after:top-1/2 after:border-[9px] after:border-transparent after:border-l-[#28211b] after:-mt-[9px] after:pointer-events-none">
               <div className="flex items-center justify-center gap-2 lg:gap-2.5 w-full">
                 <Image
                   src="/network/mvc.png"
@@ -295,7 +295,7 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
             </div>
 
             {/* MVC Content */}
-            <div className="flex-1 w-full lg:w-auto bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 min-h-[200px]">
+            <div className="flex-1 w-full lg:w-auto bg-[#28211b] backdrop-blur-[40px] rounded-lg border border-white/10 min-h-[120px]">
               {/* MVC Blocks */}
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-3 p-4 lg:px-[18px] lg:pb-3">
                 {statistics
@@ -326,15 +326,15 @@ const ProgressBarSection: React.FC<ProgressBarSectionProps> = ({
                     return (
                       <div
                         key={block.blockHash}
-                        className="bg-[#FA9600] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
+                        className="bg-[#8385F7] rounded-lg text-center p-3 flex flex-col items-center justify-center gap-2 aspect-square shrink-0"
                       >
-                        <div className="text-[#6C655E] text-xs">
+                        <div className="text-black text-xs">
                           # {block.blockHeight}
                         </div>
                         <div className="text-[#3D3935] font-semibold text-sm">
                           {block.txCount} TX
                         </div>
-                        <div className="text-[#6C655E] text-xs">
+                        <div className="text-black text-xs">
                           {formatTimeDisplay(block.blockTime)}
                         </div>
                       </div>
