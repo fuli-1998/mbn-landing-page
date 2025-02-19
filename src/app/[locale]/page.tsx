@@ -31,6 +31,7 @@ const Header = () => {
     { href: "#why", label: t("nav.whyImportant") },
     { href: "#how", label: t("nav.howItWorks") },
     { href: "#faq", label: t("nav.faq") },
+    { href: "https://api.metabitcoin.network/api-base/swagger/index.html", label: t("nav.apiDoc") },
   ];
 
   const languageLabel = locale === "zh" ? "中文" : "EN";
