@@ -4,7 +4,8 @@
     "comparing": "方案对比",
     "whyImportant": "为什么重要",
     "howItWorks": "如何工作",
-    "faq": "常见问题"
+    "faq": "常见问题",
+    "apiDoc": "API文档"
   },
   "hero": {
     "title": "MetaBitcoin Network 是什么？",
