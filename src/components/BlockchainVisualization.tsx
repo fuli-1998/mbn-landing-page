@@ -7,7 +7,7 @@ import {
   fetchBlockList,
   fetchLatestBlock,
   fetchBlockStatistics,
-  fetchTxStatistics,
+  // fetchTxStatistics,
   fetchBlockInfo,
   BlockData,
   BlockStatistics,
@@ -635,7 +635,7 @@ export const BlockchainVisualization = () => {
   const [error, setError] = useState<string | null>(null);
   const [statistics, setStatistics] = useState<BlockStatistics[]>([]);
   const [btcStep, setBtcStep] = useState<number>(0);
-  const [mempoolStats, setMempoolStats] = useState<TxStatistics[]>([]);
+  // const [mempoolStats, setMempoolStats] = useState<TxStatistics[]>([]);
   const [currentHeight, setCurrentHeight] = useState<number>(-1);
   const [statisticsLoading, setStatisticsLoading] = useState(false);
   const [blockInfo, setBlockInfo] = useState<BlockData | null>(null);
@@ -672,17 +672,18 @@ export const BlockchainVisualization = () => {
 
   const fetchMempoolData = async () => {
     try {
-      const [txStatsResponse, blockInfoResponse] = await Promise.all([
-        fetchTxStatistics(-1),
-        fetchBlockInfo(-1),
-      ]);
+      // const [txStatsResponse, blockInfoResponse] = await Promise.all([
+      //   fetchTxStatistics(-1),
+      //   fetchBlockInfo(-1),
+      // ]);
+      const blockInfoResponse = await fetchBlockInfo(-1);
 
-      console.log("txStatsResponse", txStatsResponse);
+      // console.log("txStatsResponse", txStatsResponse);
       console.log("blockInfoResponse", blockInfoResponse);
 
-      if (txStatsResponse.code === 0) {
-        setMempoolStats(txStatsResponse.data);
-      }
+      // if (txStatsResponse.code === 0) {
+      //   setMempoolStats(txStatsResponse.data);
+      // }
 
       if (blockInfoResponse.code === 0) {
         setBlockInfo(blockInfoResponse.data);
@@ -797,7 +798,7 @@ export const BlockchainVisualization = () => {
           loading={blocksLoading}
           selectedBlock={selectedBlock}
           blocks={blocks}
-          mempoolStats={mempoolStats}
+          mempoolStats={[]}
           blockInfo={blockInfo}
           handleMempoolClick={handleMempoolClick}
           handleBlockClick={handleBlockClick}
