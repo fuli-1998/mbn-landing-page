@@ -31,6 +31,7 @@ const Header = () => {
     { href: "#why", label: t("nav.whyImportant") },
     { href: "#how", label: t("nav.howItWorks") },
     { href: "#faq", label: t("nav.faq") },
+    { href: "https://api.metabitcoin.network/api-base/swagger/index.html", label: t("nav.apiDoc") },
   ];
 
   const languageLabel = locale === "zh" ? "中文" : "EN";
@@ -58,6 +59,10 @@ const Header = () => {
                 key={index}
                 href={item.href}
                 className="text-white/90 text-base font-normal leading-loose hover:text-orange-500 transition-colors"
+                {...(item.href.startsWith('http') ? {
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                } : {})}
               >
                 {item.label}
               </Link>
@@ -117,6 +122,10 @@ const Header = () => {
                 className="text-white/90 text-2xl py-4 hover:text-orange-500 transition-colors animate-in fade-in slide-in-from-left duration-300"
                 style={{ animationDelay: `${index * 100}ms` }}
                 onClick={() => setIsMenuOpen(false)}
+                {...(item.href.startsWith('http') ? {
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                } : {})}
               >
                 {item.label}
               </Link>
