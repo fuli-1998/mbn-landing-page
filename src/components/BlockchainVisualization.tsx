@@ -677,6 +677,9 @@ export const BlockchainVisualization = () => {
         fetchBlockInfo(-1),
       ]);
 
+      console.log("txStatsResponse", txStatsResponse);
+      console.log("blockInfoResponse", blockInfoResponse);
+
       if (txStatsResponse.code === 0) {
         setMempoolStats(txStatsResponse.data);
       }

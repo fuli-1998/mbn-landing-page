@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import setupLocatorUI from "@locator/runtime";
 import "./globals.css";
-
-if (process.env.NODE_ENV === "development") {
-  setupLocatorUI();
-}
 
 export const metadata: Metadata = {
   title: "MetaBitcoin Network",
