@@ -592,9 +592,8 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#090909] mb-4">
                   {t("tx")}:{" "}
-                  {block.blockTxCount.Bitcoin?.totalTxCount ||
-                    0 + block.blockTxCount.MVC?.totalTxCount ||
-                    0}
+                  {(block.blockTxCount.MVC?.totalTxCount || 0) +
+                    (block.blockTxCount.MVC?.totalTxCount || 0)}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
                   <div>
