@@ -14,6 +14,7 @@ import {
   TxStatistics,
 } from "@/utils/api";
 import { useTranslations } from "next-intl";
+import Decimal from "decimal.js";
 
 const LoadingSkeleton = () => {
   return (
@@ -592,8 +593,9 @@ const BlockVisualizationSection: React.FC<BlockVisualizationSectionProps> = ({
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#090909] mb-4">
                   {t("tx")}:{" "}
-                  {(block.blockTxCount.MVC?.totalTxCount || 0) +
-                    (block.blockTxCount.MVC?.totalTxCount || 0)}
+                  {new Decimal(block.blockTxCount.Bitcoin?.totalTxCount || 0)
+                    .plus(block.blockTxCount.MVC?.totalTxCount || 0)
+                    .toNumber()}
                 </div>
                 <div className="text-sm text-[#090909] space-y-1">
                   <div>
